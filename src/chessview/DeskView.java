@@ -7,6 +7,7 @@ import chessview.piece.PawnView;
 import chessview.piece.PieceView;
 import chessview.piece.QueenView;
 import chessview.piece.RookView;
+import gameplay.ClickOnPieceListener;
 
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -17,6 +18,7 @@ import java.awt.Font;
 
 public class DeskView extends JPanel {
     private BufferedImage buffer;
+    private PieceView currentPiece;
 
     public DeskView(){
         super();
@@ -67,43 +69,65 @@ public class DeskView extends JPanel {
         setInitialPositionBishop();
         setInitialPositionQueen();
         setInitialPositionKing();
+        setListenersOnPiece();
+        currentPiece = null;
     }
 
     private void setInitialPositionPawns(){
         for (int i = 0; i < 8; i++) {
-            add(new PawnView("black", new CheckerboardPosition(1, i, "black")).getPiece());
-            add(new PawnView("white", new CheckerboardPosition(6, i, "white")).getPiece());
+            add(new PawnView("black", new CheckerboardPosition(1, i, "black")));
+            add(new PawnView("white", new CheckerboardPosition(6, i, "white")));
         }
     }
 
     private void setInitialPositionRook(){
-        add(new RookView("black",new CheckerboardPosition(0,0,"black")).getPiece());
-        add(new RookView("black",new CheckerboardPosition(0,7,"black")).getPiece());
-        add(new RookView("white",new CheckerboardPosition(7,0,"white")).getPiece());
-        add(new RookView("white",new CheckerboardPosition(7,7,"white")).getPiece());
+        add(new RookView("black",new CheckerboardPosition(0,0,"black")));
+        add(new RookView("black",new CheckerboardPosition(0,7,"black")));
+        add(new RookView("white",new CheckerboardPosition(7,0,"white")));
+        add(new RookView("white",new CheckerboardPosition(7,7,"white")));
     }
 
     private void setInitialPositionKnight(){
-        add(new KnightView("black", new CheckerboardPosition(0, 1, "black")).getPiece());
-        add(new KnightView("black",new CheckerboardPosition(0,6,"black")).getPiece());
-        add(new KnightView("white",new CheckerboardPosition(7,1,"white")).getPiece());
-        add(new KnightView("white",new CheckerboardPosition(7,6,"white")).getPiece());
+        add(new KnightView("black",new CheckerboardPosition(0, 1, "black")));
+        add(new KnightView("black",new CheckerboardPosition(0,6,"black")));
+        add(new KnightView("white",new CheckerboardPosition(7,1,"white")));
+        add(new KnightView("white",new CheckerboardPosition(7,6,"white")));
     }
 
     private void setInitialPositionBishop(){
-        add(new BishopView("black", new CheckerboardPosition(0, 2, "black")).getPiece());
-        add(new BishopView("black",new CheckerboardPosition(0,5,"black")).getPiece());
-        add(new BishopView("white",new CheckerboardPosition(7,2,"white")).getPiece());
-        add(new BishopView("white",new CheckerboardPosition(7,5,"white")).getPiece());
+        add(new BishopView("black",new CheckerboardPosition(0, 2, "black")));
+        add(new BishopView("black",new CheckerboardPosition(0,5,"black")));
+        add(new BishopView("white",new CheckerboardPosition(7,2,"white")));
+        add(new BishopView("white",new CheckerboardPosition(7,5,"white")));
     }
 
     private void setInitialPositionQueen(){
-        add(new QueenView("black", new CheckerboardPosition(0, 3, "black")).getPiece());
-        add(new QueenView("white",new CheckerboardPosition(7,3,"white")).getPiece());
+        add(new QueenView("black", new CheckerboardPosition(0, 3, "black")));
+        add(new QueenView("white",new CheckerboardPosition(7,3,"white")));
     }
 
     private void setInitialPositionKing(){
-        add(new KingView("black", new CheckerboardPosition(0, 4, "black")).getPiece());
-        add(new KingView("white", new CheckerboardPosition(7, 4, "white")).getPiece());
+        add(new KingView("black", new CheckerboardPosition(0, 4, "black")));
+        add(new KingView("white", new CheckerboardPosition(7, 4, "white")));
+    }
+
+    private void setListenersOnPiece(){
+        PieceView currentPiece;
+        int numberOfPiece = getComponentCount();
+        System.out.print(numberOfPiece);
+        for (int i = 0; i < numberOfPiece; i++) {
+            //if (getComponent(i).getClass().getName().equals("JLabel")){
+                currentPiece = (PieceView)getComponent(i);
+                currentPiece.addMouseListener(new ClickOnPieceListener(this, currentPiece));
+            //}
+        }
+    }
+
+    public PieceView getCurrentPiece() {
+        return currentPiece;
+    }
+
+    public void setCurrentPiece(PieceView currentPiece) {
+        this.currentPiece = currentPiece;
     }
 }
