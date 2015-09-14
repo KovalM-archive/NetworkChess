@@ -46,7 +46,7 @@ public abstract class PieceView extends JLabel {
     }
 
     public void choose(){
-        setBorder(BorderFactory.createLineBorder(Color.green, 3));
+        setBorder(BorderFactory.createLineBorder(Color.green, 2));
     }
 
     public void notChoose(){

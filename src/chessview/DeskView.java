@@ -14,6 +14,7 @@ import gameplay.ClickOnDeskListener;
 import gameplay.ClickOnPieceListener;
 
 import javax.swing.JPanel;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -115,12 +116,54 @@ public class DeskView extends JPanel {
         if (newCurrentPiece == null){
             currentPiece.notChoose();
             currentPiece = newCurrentPiece;
+            eraseAllCandidate();
             deskModel.setAllCandidate(null);
         } else {
+            if (currentPiece != null){
+                eraseAllCandidate();
+                currentPiece.notChoose();
+            }
             currentPiece = newCurrentPiece;
             currentPiece.choose();
             deskModel.createCandidateList(currentPiece.getPieceModel());
+            drawAllCandidate();
         }
+    }
+
+    private void drawAllCandidate(){
+        List<PositionWithPiece> allCandidate = deskModel.getAllCandidate();
+        PositionWithPiece currentPosition;
+        int n = allCandidate.size();
+        for (int i = 0; i < n; i++) {
+            currentPosition = allCandidate.get(i);
+            if (currentPosition.getPiece() != null){
+                leadRound(Color.red, currentPosition);
+            } else {
+                leadRound(Color.green, currentPosition);
+            }
+        }
+    }
+
+    private void eraseAllCandidate(){
+        List<PositionWithPiece> allCandidate = deskModel.getAllCandidate();
+        PositionWithPiece currentPosition;
+        int n = allCandidate.size();
+        for (int i = 0; i < n; i++) {
+            currentPosition = allCandidate.get(i);
+            if (currentPosition.getColor().equals("white")){
+                leadRound(Color.white, currentPosition);
+            } else {
+                leadRound(Color.gray, currentPosition);
+            }
+        }
+    }
+
+    private void leadRound(Color currentColor, PositionWithPiece currentPosition){
+        Graphics2D painter = (Graphics2D)buffer.getGraphics();
+        painter.setColor(currentColor);
+        painter.setStroke(new BasicStroke(2.0f));
+        painter.drawRect(300 + currentPosition.getColumn() * 90, currentPosition.getRow() * 90, 90, 90);
+        repaint();
     }
 
     public void setInitialState(){

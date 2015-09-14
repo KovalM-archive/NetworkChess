@@ -13,26 +13,30 @@ public class PawnModel extends PieceModel {
         boolean answer = false;
         int delta;
         if (color.equals("white")){
-            if (newPosition.getPiece() == null){
+            if (newPosition.getPiece() != null){
                 if (piecePosition.getRow()-newPosition.getRow()==1 &&
                         Math.abs(piecePosition.getColumn()-newPosition.getColumn())==1){
                     answer = true;
                 }
             } else {
                 delta = piecePosition.getRow()==6 ? 2 : 1;
-                if (piecePosition.getRow() - newPosition.getRow()<delta){
+                if (piecePosition.getRow() - newPosition.getRow()<=delta &&
+                        piecePosition.getRow() - newPosition.getRow()>0 &&
+                        piecePosition.getColumn() == newPosition.getColumn()){
                     answer = true;
                 }
             }
         } else {
-            if (newPosition.getPiece() == null){
+            if (newPosition.getPiece() != null){
                 if (piecePosition.getRow()-newPosition.getRow()==-1 &&
                         Math.abs(piecePosition.getColumn()-newPosition.getColumn())==1){
                     answer = true;
                 }
             } else {
                 delta = piecePosition.getRow() == 1 ? 2 : 1;
-                if (newPosition.getRow() - piecePosition.getRow() < delta) {
+                if (newPosition.getRow() - piecePosition.getRow() <= delta &&
+                        newPosition.getRow() - piecePosition.getRow() > 0 &&
+                        piecePosition.getColumn() == newPosition.getColumn()) {
                     answer = true;
                 }
             }

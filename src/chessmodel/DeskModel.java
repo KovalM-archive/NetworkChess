@@ -13,10 +13,19 @@ public class DeskModel {
     public DeskModel(){
         setWalkethPlayer("white");
         createEmptyDesk();
+        setAllCandidate(null);
     }
 
     public void createCandidateList(PieceModel currentPiece){
-
+        allCandidate = new ArrayList<PositionWithPiece>();
+        PositionWithPiece currentPosition;
+        int n = allPosition.size();
+        for (int i = 0; i < n; i++) {
+            currentPosition = allPosition.get(i);
+            if (currentPiece.gameLogic(currentPosition)){
+                allCandidate.add(currentPosition);
+            }
+        }
     }
 
     public String getWalkethPlayer() {

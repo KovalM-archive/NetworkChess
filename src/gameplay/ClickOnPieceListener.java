@@ -21,12 +21,7 @@ public class ClickOnPieceListener implements MouseListener{
         if (choosePiece.getColor().equals(gameDesk.getWalkethPlayer())){
             if (choosePiece.equals(currentPiece)){
                 gameDesk.setCurrentPiece(null);
-                currentPiece.notChoose();
             } else {
-                if (currentPiece != null) {
-                    currentPiece.notChoose();
-                }
-                choosePiece.choose();
                 gameDesk.setCurrentPiece(choosePiece);
             }
         } else{
