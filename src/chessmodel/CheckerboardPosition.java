@@ -1,4 +1,4 @@
-package chessview;
+package chessmodel;
 
 public class CheckerboardPosition {
     private int row;
@@ -27,8 +27,16 @@ public class CheckerboardPosition {
     public String getColor() {
         if ((row+column) % 2==0) {
             return "white";
-        } else{
+        } else {
             return "black";
+        }
+    }
+
+    public boolean equalsPosition(CheckerboardPosition anotherPosition){
+        if (row == anotherPosition.getRow() && column == anotherPosition.getColumn()){
+            return true;
+        } else {
+            return false;
         }
     }
 }

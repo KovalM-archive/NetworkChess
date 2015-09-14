@@ -1,9 +1,8 @@
 package gameplay;
 
-import chessview.CheckerboardPosition;
+import chessmodel.CheckerboardPosition;
 import chessview.DeskView;
-import chessview.piece.PieceView;
-import sun.security.krb5.internal.crypto.Des;
+import chessview.pieceview.PieceView;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -23,9 +22,8 @@ public class ClickOnDeskListener implements MouseListener {
         if (currentPiece != null) {
             if (300 < x && x <= 1020 && 0 < y && y <= 720) {
                 x -= 300;
-                currentPiece.goToPosition(new CheckerboardPosition(y /= 90, x /= 90));
+                deskView.moveCurrentPiece(new CheckerboardPosition(y /= 90, x /= 90));
                 deskView.changePlayer();
-                currentPiece.notChoose();
                 deskView.setCurrentPiece(null);
             }
         }

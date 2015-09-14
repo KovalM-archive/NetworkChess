@@ -1,4 +1,4 @@
-package constants;
+package chessview.pieceview;
 
 import javax.swing.ImageIcon;
 

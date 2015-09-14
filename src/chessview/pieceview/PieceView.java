@@ -1,7 +1,7 @@
-package chessview.piece;
+package chessview.pieceview;
 
-import chessview.CheckerboardPosition;
-import constants.PieceConstants;
+import chessmodel.piecemodel.PieceModel;
+import chessmodel.CheckerboardPosition;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -10,7 +10,7 @@ import java.awt.Color;
 
 public abstract class PieceView extends JLabel {
     private String color;
-    private CheckerboardPosition currentPosition;
+    protected PieceModel pieceModel;
 
     protected PieceView(){
         setBackground(new Color(255, 255, 255, 0));
@@ -38,11 +38,11 @@ public abstract class PieceView extends JLabel {
     }
 
     public CheckerboardPosition getCurrentPosition() {
-        return currentPosition;
+        return pieceModel.getPiecePosition();
     }
 
     protected void setCurrentPosition(CheckerboardPosition currentPosition) {
-        this.currentPosition = currentPosition;
+        pieceModel.setPiecePosition(currentPosition);
     }
 
     public void choose(){
@@ -51,5 +51,13 @@ public abstract class PieceView extends JLabel {
 
     public void notChoose(){
         setBorder(null);
+    }
+
+    public PieceModel getPieceModel() {
+        return pieceModel;
+    }
+
+    public void setPieceModel(PieceModel pieceModel) {
+        this.pieceModel = pieceModel;
     }
 }

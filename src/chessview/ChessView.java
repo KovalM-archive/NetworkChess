@@ -1,14 +1,10 @@
 package chessview;
 
-import constants.PieceConstants;
-
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 
 public class ChessView {
     public ChessView(){
@@ -22,6 +18,5 @@ public class ChessView {
         mainWindow.setExtendedState(Frame.MAXIMIZED_BOTH);
 
         mainWindow.add(new DeskView());
-        //mainWindow.add(new JLabel(PieceConstants.BLACK_KING));
     }
 }

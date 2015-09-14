@@ -1,8 +1,7 @@
 package gameplay;
 
-import chessview.CheckerboardPosition;
 import chessview.DeskView;
-import chessview.piece.PieceView;
+import chessview.pieceview.PieceView;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -24,14 +23,11 @@ public class ClickOnPieceListener implements MouseListener{
                 gameDesk.setCurrentPiece(null);
                 currentPiece.notChoose();
             } else {
-                if (currentPiece != null){
+                if (currentPiece != null) {
                     currentPiece.notChoose();
-                    choosePiece.choose();
-                    gameDesk.setCurrentPiece(choosePiece);
-                } else{
-                    gameDesk.setCurrentPiece(choosePiece);
-                    choosePiece.choose();
                 }
+                choosePiece.choose();
+                gameDesk.setCurrentPiece(choosePiece);
             }
         } else{
             if (currentPiece != null){
