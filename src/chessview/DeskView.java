@@ -39,6 +39,19 @@ public class DeskView extends JPanel {
         setVisible(true);
     }
 
+    public boolean isLelagMove(CheckerboardPosition newPosition){
+        List<PositionWithPiece> allCandidate = deskModel.getAllCandidate();
+        PositionWithPiece currentPosition;
+        int n = allCandidate.size();
+        for (int i = 0; i < n; i++) {
+            currentPosition = allCandidate.get(i);
+            if (currentPosition.equalsPosition(newPosition)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void moveCurrentPiece(CheckerboardPosition newPosition){
         currentPiece.goToPosition(newPosition);
         deskModel.removePieceFromPosition(currentPiece.getPieceModel());

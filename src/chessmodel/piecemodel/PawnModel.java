@@ -15,7 +15,8 @@ public class PawnModel extends PieceModel {
         if (color.equals("white")){
             if (newPosition.getPiece() != null){
                 if (piecePosition.getRow()-newPosition.getRow()==1 &&
-                        Math.abs(piecePosition.getColumn()-newPosition.getColumn())==1){
+                        Math.abs(piecePosition.getColumn()-newPosition.getColumn())==1 &&
+                        !newPosition.getPiece().getColor().equals(color)){
                     answer = true;
                 }
             } else {
@@ -29,7 +30,8 @@ public class PawnModel extends PieceModel {
         } else {
             if (newPosition.getPiece() != null){
                 if (piecePosition.getRow()-newPosition.getRow()==-1 &&
-                        Math.abs(piecePosition.getColumn()-newPosition.getColumn())==1){
+                        Math.abs(piecePosition.getColumn()-newPosition.getColumn())==1 &&
+                        !newPosition.getPiece().getColor().equals(color)){
                     answer = true;
                 }
             } else {

@@ -25,8 +25,8 @@ public class ClickOnPieceListener implements MouseListener{
                 gameDesk.setCurrentPiece(choosePiece);
             }
         } else{
-            if (currentPiece != null){
-                currentPiece.goToPosition(choosePiece.getCurrentPosition());
+            if (currentPiece != null && gameDesk.isLelagMove(choosePiece.getCurrentPosition())){
+                gameDesk.moveCurrentPiece(choosePiece.getCurrentPosition());
                 gameDesk.remove(choosePiece);
                 gameDesk.changePlayer();
                 currentPiece.notChoose();

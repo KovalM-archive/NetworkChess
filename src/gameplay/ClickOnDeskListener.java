@@ -16,15 +16,18 @@ public class ClickOnDeskListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        int x = e.getX();
+        int x = e.getX()-300;
         int y = e.getY();
         PieceView currentPiece = deskView.getCurrentPiece();
+        CheckerboardPosition newPosition;
         if (currentPiece != null) {
-            if (300 < x && x <= 1020 && 0 < y && y <= 720) {
-                x -= 300;
-                deskView.moveCurrentPiece(new CheckerboardPosition(y /= 90, x /= 90));
-                deskView.changePlayer();
-                deskView.setCurrentPiece(null);
+            if (0 < x && x <= 720 && 0 < y && y <= 720) {
+                newPosition = new CheckerboardPosition(y/=90, x /= 90);
+                if (deskView.isLelagMove(newPosition)){
+                    deskView.moveCurrentPiece(newPosition);
+                    deskView.changePlayer();
+                    deskView.setCurrentPiece(null);
+                }
             }
         }
     }
