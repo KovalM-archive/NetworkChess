@@ -12,7 +12,16 @@ public class KingModel extends PieceModel {
 
     @Override
     public boolean gameLogic(PositionWithPiece newPosition) {
-        return false;
+        boolean answer = false;
+        int row = newPosition.getRow();
+        int column = newPosition.getColumn();
+        if (Math.abs(piecePosition.getRow()-row)<=1 && Math.abs(piecePosition.getColumn()-column)<=1){
+            answer = true;
+        }
+        if (newPosition.getPiece()!=null && newPosition.getPiece().getColor().equals(color)){
+            answer = false;
+        }
+        return answer;
     }
 
     public boolean isUsing() {

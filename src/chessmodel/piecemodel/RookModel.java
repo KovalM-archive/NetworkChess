@@ -13,7 +13,17 @@ public class RookModel extends PieceModel {
 
     @Override
     public boolean gameLogic(PositionWithPiece newPosition) {
-        return false;
+        boolean answer = false;
+        int row = newPosition.getRow();
+        int column = newPosition.getColumn();
+        if (row==piecePosition.getRow() || column==piecePosition.getColumn()){
+            answer = true;
+        }
+
+        if (newPosition.getPiece()!=null && newPosition.getPiece().getColor().equals(color)){
+            answer = false;
+        }
+        return answer;
     }
 
     public boolean isUsing() {
