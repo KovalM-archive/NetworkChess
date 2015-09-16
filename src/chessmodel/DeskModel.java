@@ -84,7 +84,7 @@ public class DeskModel {
     public List<PositionWithPiece> getAllCandidate() {
         return allCandidate;
     }
-
+    public List<PositionWithPiece> getAllPosition(){ return allPosition;}
     public void setAllCandidate(List<PositionWithPiece> allCandidate) {
         this.allCandidate = allCandidate;
     }

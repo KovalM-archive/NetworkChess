@@ -149,10 +149,14 @@ public class DeskView extends JPanel {
         int n = allCandidate.size();
         for (int i = 0; i < n; i++) {
             currentPosition = allCandidate.get(i);
+            if (currentPosition.getPiece() == null){
+                leadRound(Color.green, currentPosition);
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            currentPosition = allCandidate.get(i);
             if (currentPosition.getPiece() != null){
                 leadRound(Color.red, currentPosition);
-            } else {
-                leadRound(Color.green, currentPosition);
             }
         }
     }

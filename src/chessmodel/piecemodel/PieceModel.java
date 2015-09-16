@@ -52,4 +52,23 @@ public abstract class PieceModel {
             }
         }
     }
+    protected void passNeighboringCells(int factor1, int factor2, DeskModel deskModel,
+                                        List<PositionWithPiece> allCandidate){
+        int row = piecePosition.getRow();
+        int column = piecePosition.getColumn();
+        PositionWithPiece currentPosition;
+        if (deskModel.checkDeskBorder(row+factor1,column+factor2)){
+            currentPosition = deskModel.getEqualElement(new CheckerboardPosition(row+factor1, column+factor2));
+            if (currentPosition != null){
+                if (currentPosition.getPiece() != null){
+                    if (!currentPosition.getPiece().getColor().equals(color)){
+                        allCandidate.add(currentPosition);
+                    }
+
+                } else {
+                    allCandidate.add(currentPosition);
+                }
+            }
+        }
+    }
 }
