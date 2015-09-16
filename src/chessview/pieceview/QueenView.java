@@ -9,6 +9,6 @@ public class QueenView extends PieceView{
         pieceModel = new QueenModel(color, startingPosition);
         setColor(color);
         goToPosition(startingPosition);
-        setPiecePicture(color.equals("black") ? PieceConstants.BLACK_QUEEN : PieceConstants.WHITE_QUEEN);
+        setPiecePicture(color.equals("black") ? PieceViewConstants.BLACK_QUEEN : PieceViewConstants.WHITE_QUEEN);
     }
 }

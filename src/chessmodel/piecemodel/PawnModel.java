@@ -1,48 +1,56 @@
 package chessmodel.piecemodel;
 
+import chessmodel.DeskModel;
 import chessmodel.PositionWithPiece;
 import chessmodel.CheckerboardPosition;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PawnModel extends PieceModel {
+    private boolean using;
+
     public PawnModel(String color, CheckerboardPosition piecePosition) {
         super(color, piecePosition);
+        using = false;
     }
 
     @Override
-    public boolean gameLogic(PositionWithPiece newPosition) {
-        boolean answer = false;
-        int delta;
-        if (color.equals("white")){
-            if (newPosition.getPiece() != null){
-                if (piecePosition.getRow()-newPosition.getRow()==1 &&
-                        Math.abs(piecePosition.getColumn()-newPosition.getColumn())==1 &&
-                        !newPosition.getPiece().getColor().equals(color)){
-                    answer = true;
-                }
-            } else {
-                delta = piecePosition.getRow()==6 ? 2 : 1;
-                if (piecePosition.getRow() - newPosition.getRow()<=delta &&
-                        piecePosition.getRow() - newPosition.getRow()>0 &&
-                        piecePosition.getColumn() == newPosition.getColumn()){
-                    answer = true;
-                }
-            }
-        } else {
-            if (newPosition.getPiece() != null){
-                if (piecePosition.getRow()-newPosition.getRow()==-1 &&
-                        Math.abs(piecePosition.getColumn()-newPosition.getColumn())==1 &&
-                        !newPosition.getPiece().getColor().equals(color)){
-                    answer = true;
-                }
-            } else {
-                delta = piecePosition.getRow() == 1 ? 2 : 1;
-                if (newPosition.getRow() - piecePosition.getRow() <= delta &&
-                        newPosition.getRow() - piecePosition.getRow() > 0 &&
-                        piecePosition.getColumn() == newPosition.getColumn()) {
-                    answer = true;
-                }
+    public List<PositionWithPiece> getAllCandidate(DeskModel deskModel) {
+        List<PositionWithPiece> allCandidate = new ArrayList<>();
+        int row = piecePosition.getRow();
+        int column = piecePosition.getColumn();
+        PositionWithPiece currentPosition;
+        int factor1 = color.equals("white")?-1:1;
+
+        if (deskModel.checkDeskBorder(row + factor1, column)) {
+            currentPosition = deskModel.getEqualElement(new CheckerboardPosition(row + factor1, column));
+            if (currentPosition != null && currentPosition.getPiece()==null){
+                allCandidate.add(currentPosition);
             }
         }
-        return answer;
+        if (!using && deskModel.checkDeskBorder(row + 2*factor1, column)) {
+            currentPosition = deskModel.getEqualElement(new CheckerboardPosition(row + 2*factor1, column));
+            if (currentPosition != null && currentPosition.getPiece()==null){
+                allCandidate.add(currentPosition);
+            }
+            using = true;
+        }
+        if (deskModel.checkDeskBorder(row + factor1, column + 1)) {
+            currentPosition = deskModel.getEqualElement(new CheckerboardPosition(row + factor1, column + 1));
+            if (currentPosition != null && currentPosition.getPiece()!=null &&
+                    !currentPosition.getPiece().getColor().equals(color)){
+                allCandidate.add(currentPosition);
+            }
+        }
+
+        if (deskModel.checkDeskBorder(row + factor1, column - 1)) {
+            currentPosition = deskModel.getEqualElement(new CheckerboardPosition(row + factor1, column - 1));
+            if (currentPosition != null && currentPosition.getPiece()!=null &&
+                    !currentPosition.getPiece().getColor().equals(color)){
+                allCandidate.add(currentPosition);
+            }
+        }
+        return allCandidate;
     }
 }

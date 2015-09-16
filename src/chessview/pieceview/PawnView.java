@@ -9,6 +9,6 @@ public class PawnView extends PieceView {
         pieceModel = new PawnModel(color, startingPosition);
         setColor(color);
         goToPosition(startingPosition);
-        setPiecePicture(color.equals("black") ? PieceConstants.BLACK_PAWN : PieceConstants.WHITE_PAWN);
+        setPiecePicture(color.equals("black") ? PieceViewConstants.BLACK_PAWN : PieceViewConstants.WHITE_PAWN);
     }
 }

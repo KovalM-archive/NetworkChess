@@ -1,7 +1,10 @@
 package chessmodel.piecemodel;
 
+import chessmodel.DeskModel;
 import chessmodel.PositionWithPiece;
 import chessmodel.CheckerboardPosition;
+
+import java.util.List;
 
 public abstract class PieceModel {
     protected String color;
@@ -20,13 +23,33 @@ public abstract class PieceModel {
         this.color = color;
     }
 
-    public abstract boolean gameLogic(PositionWithPiece newPosition);
-
     public CheckerboardPosition getPiecePosition() {
         return piecePosition;
     }
 
+    public abstract List<PositionWithPiece> getAllCandidate(DeskModel deskModel);
     public void setPiecePosition(CheckerboardPosition piecePosition) {
         this.piecePosition = piecePosition;
+    }
+
+    protected void passDirection(int factor1, int factor2, DeskModel deskModel, List<PositionWithPiece> allCandidate){
+        int row = piecePosition.getRow();
+        int column = piecePosition.getColumn();
+        PositionWithPiece currentPosition;
+        for (int i = 1; i < 8; i++) {
+            if (deskModel.checkDeskBorder(row+factor1*i,column+factor2*i)){
+                currentPosition = deskModel.getEqualElement(new CheckerboardPosition(row+factor1*i, column+factor2*i));
+                if (currentPosition != null){
+                    if (currentPosition.getPiece() != null){
+                        if (!currentPosition.getPiece().getColor().equals(color)){
+                            allCandidate.add(currentPosition);
+                        }
+                        break;
+                    } else {
+                        allCandidate.add(currentPosition);
+                    }
+                }
+            }
+        }
     }
 }

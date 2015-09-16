@@ -9,6 +9,6 @@ public class RookView extends PieceView{
         pieceModel = new RookModel(color, startingPosition);
         setColor(color);
         goToPosition(startingPosition);
-        setPiecePicture(color.equals("black") ? PieceConstants.BLACK_ROOK : PieceConstants.WHITE_ROOK);
+        setPiecePicture(color.equals("black") ? PieceViewConstants.BLACK_ROOK : PieceViewConstants.WHITE_ROOK);
     }
 }

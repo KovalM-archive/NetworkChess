@@ -1,7 +1,11 @@
 package chessmodel.piecemodel;
 
+import chessmodel.DeskModel;
 import chessmodel.PositionWithPiece;
 import chessmodel.CheckerboardPosition;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RookModel extends PieceModel {
     private boolean using;
@@ -12,18 +16,13 @@ public class RookModel extends PieceModel {
     }
 
     @Override
-    public boolean gameLogic(PositionWithPiece newPosition) {
-        boolean answer = false;
-        int row = newPosition.getRow();
-        int column = newPosition.getColumn();
-        if (row==piecePosition.getRow() || column==piecePosition.getColumn()){
-            answer = true;
-        }
-
-        if (newPosition.getPiece()!=null && newPosition.getPiece().getColor().equals(color)){
-            answer = false;
-        }
-        return answer;
+    public List<PositionWithPiece> getAllCandidate(DeskModel deskModel) {
+        List<PositionWithPiece> allCandidate = new ArrayList<>();
+        passDirection(1, 0, deskModel, allCandidate);
+        passDirection(0, 1, deskModel, allCandidate);
+        passDirection(-1, 0, deskModel, allCandidate);
+        passDirection(0, -1, deskModel, allCandidate);
+        return allCandidate;
     }
 
     public boolean isUsing() {

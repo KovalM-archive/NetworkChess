@@ -17,15 +17,7 @@ public class DeskModel {
     }
 
     public void createCandidateList(PieceModel currentPiece){
-        allCandidate = new ArrayList<PositionWithPiece>();
-        PositionWithPiece currentPosition;
-        int n = allPosition.size();
-        for (int i = 0; i < n; i++) {
-            currentPosition = allPosition.get(i);
-            if (currentPiece.gameLogic(currentPosition)){
-                allCandidate.add(currentPosition);
-            }
-        }
+        allCandidate = currentPiece.getAllCandidate(this);
     }
 
     public String getWalkethPlayer() {
@@ -44,6 +36,18 @@ public class DeskModel {
         if (currentPosition != null) {
             allPosition.add(currentPosition);
         }
+    }
+
+    public PositionWithPiece getEqualElement(CheckerboardPosition currentPossition){
+        int n = allPosition.size();
+        PositionWithPiece answerPosition;
+        for (int i = 0; i < n; i++) {
+            answerPosition = allPosition.get(i);
+            if (answerPosition.equalsPosition(currentPossition)){
+                return answerPosition;
+            }
+        }
+        return null;
     }
 
     private void createEmptyDesk(){
@@ -83,5 +87,12 @@ public class DeskModel {
 
     public void setAllCandidate(List<PositionWithPiece> allCandidate) {
         this.allCandidate = allCandidate;
+    }
+    public boolean checkDeskBorder(int x, int y){
+        if (0<=x && x<=7 && 0<=y && y<=7){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

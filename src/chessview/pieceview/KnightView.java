@@ -9,6 +9,6 @@ public class KnightView extends PieceView {
         pieceModel = new KnightModel(color, startingPosition);
         setColor(color);
         goToPosition(startingPosition);
-        setPiecePicture(color.equals("black") ? PieceConstants.BLACK_KNIGHT : PieceConstants.WHITE_KNIGHT);
+        setPiecePicture(color.equals("black") ? PieceViewConstants.BLACK_KNIGHT : PieceViewConstants.WHITE_KNIGHT);
     }
 }

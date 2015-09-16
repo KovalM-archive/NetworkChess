@@ -2,7 +2,7 @@ package chessview.pieceview;
 
 import javax.swing.ImageIcon;
 
-public final class PieceConstants {
+public final class PieceViewConstants {
     public final static ImageIcon BLACK_KING = new ImageIcon("image/blackKing.png");
     public final static ImageIcon BLACK_QUEEN = new ImageIcon("image/blackQueen.png");
     public final static ImageIcon BLACK_BISHOP = new ImageIcon("image/blackBishop.png");

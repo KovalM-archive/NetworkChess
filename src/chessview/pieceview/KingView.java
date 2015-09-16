@@ -9,6 +9,6 @@ public class KingView extends PieceView {
         pieceModel = new KingModel(color, startingPosition);
         setColor(color);
         goToPosition(startingPosition);
-        setPiecePicture(color.equals("black") ? PieceConstants.BLACK_KING : PieceConstants.WHITE_KING);
+        setPiecePicture(color.equals("black") ? PieceViewConstants.BLACK_KING : PieceViewConstants.WHITE_KING);
     }
 }

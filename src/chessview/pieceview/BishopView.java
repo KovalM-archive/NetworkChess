@@ -9,6 +9,6 @@ public class BishopView extends PieceView{
         pieceModel = new BishopModel(color, startingPosition);
         setColor(color);
         goToPosition(startingPosition);
-        setPiecePicture(color.equals("black") ? PieceConstants.BLACK_BISHOP : PieceConstants.WHITE_BISHOP);
+        setPiecePicture(color.equals("black") ? PieceViewConstants.BLACK_BISHOP : PieceViewConstants.WHITE_BISHOP);
     }
 }
