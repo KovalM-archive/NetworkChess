@@ -25,4 +25,9 @@ public class KnightModel extends PieceModel {
         passNeighboringCells(-2, -1, deskModel, allCandidate);
         return allCandidate;
     }
+
+    @Override
+    public List<PositionWithPiece> getAtackPositions(DeskModel deskModel) {
+        return getAllCandidate(deskModel);
+    }
 }

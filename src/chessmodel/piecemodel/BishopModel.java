@@ -22,4 +22,9 @@ public class BishopModel extends PieceModel {
         passDirection(-1, -1, deskModel, allCandidate);
         return allCandidate;
     }
+
+    @Override
+    public List<PositionWithPiece> getAtackPositions(DeskModel deskModel) {
+        return getAllCandidate(deskModel);
+    }
 }

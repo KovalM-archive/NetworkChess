@@ -52,4 +52,24 @@ public class PawnModel extends PieceModel {
         }
         return allCandidate;
     }
+
+    @Override
+    public List<PositionWithPiece> getAtackPositions(DeskModel deskModel) {
+        List<PositionWithPiece> allCandidate = new ArrayList<>();
+        int row = piecePosition.getRow();
+        int column = piecePosition.getColumn();
+        PositionWithPiece currentPosition;
+        int factor1 = color.equals("white")?-1:1;
+
+        if (deskModel.checkDeskBorder(row + factor1, column + 1)) {
+            currentPosition = deskModel.getEqualElement(new CheckerboardPosition(row + factor1, column + 1));
+            allCandidate.add(currentPosition);
+        }
+
+        if (deskModel.checkDeskBorder(row + factor1, column - 1)) {
+            currentPosition = deskModel.getEqualElement(new CheckerboardPosition(row + factor1, column - 1));
+            allCandidate.add(currentPosition);
+        }
+        return allCandidate;
+    }
 }

@@ -8,11 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RookModel extends PieceModel {
-    private boolean using;
-
     public RookModel(String color, CheckerboardPosition piecePosition) {
         super(color, piecePosition);
-        setUsing(false);
     }
 
     @Override
@@ -25,11 +22,8 @@ public class RookModel extends PieceModel {
         return allCandidate;
     }
 
-    public boolean isUsing() {
-        return using;
-    }
-
-    public void setUsing(boolean using) {
-        this.using = using;
+    @Override
+    public List<PositionWithPiece> getAtackPositions(DeskModel deskModel) {
+        return getAllCandidate(deskModel);
     }
 }

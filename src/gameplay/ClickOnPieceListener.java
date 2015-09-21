@@ -1,5 +1,6 @@
 package gameplay;
 
+import chessmodel.CheckerboardPosition;
 import chessview.DeskView;
 import chessview.pieceview.PieceView;
 
@@ -22,11 +23,30 @@ public class ClickOnPieceListener implements MouseListener{
             if (choosePiece.equals(currentPiece)){
                 gameDesk.setCurrentPiece(null);
             } else {
-                gameDesk.setCurrentPiece(choosePiece);
+                if (currentPiece != null && gameDesk.isLelagMove(choosePiece.getCurrentPosition())){
+                    CheckerboardPosition kingPosition = currentPiece.getCurrentPosition();
+                    CheckerboardPosition rookPosition = choosePiece.getCurrentPosition();
+                    int newKingColumn;
+                    int newRookColumn;
+                    if (kingPosition.getColumn() > rookPosition.getColumn()){
+                        newKingColumn = kingPosition.getColumn() - 2;
+                        newRookColumn = newKingColumn + 1;
+                    }else{
+                        newKingColumn = kingPosition.getColumn() + 2;
+                        newRookColumn = newKingColumn - 1;
+                    }
+                    gameDesk.movePiece(currentPiece, new CheckerboardPosition(kingPosition.getRow(), newKingColumn));
+                    gameDesk.movePiece(choosePiece, new CheckerboardPosition(kingPosition.getRow(), newRookColumn));
+                    gameDesk.changePlayer();
+                    currentPiece.notChoose();
+                    gameDesk.setCurrentPiece(null);
+                } else {
+                    gameDesk.setCurrentPiece(choosePiece);
+                }
             }
         } else{
-            if (currentPiece != null && gameDesk.isLelagMove(choosePiece.getCurrentPosition())){
-                gameDesk.moveCurrentPiece(choosePiece.getCurrentPosition());
+            if (currentPiece != null && gameDesk.isLelagMove(choosePiece.getCurrentPosition())) {
+                gameDesk.movePiece(currentPiece, choosePiece.getCurrentPosition());
                 gameDesk.remove(choosePiece);
                 gameDesk.changePlayer();
                 currentPiece.notChoose();

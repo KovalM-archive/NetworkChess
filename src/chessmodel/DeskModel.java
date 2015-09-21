@@ -66,6 +66,7 @@ public class DeskModel {
             currentPosition = allPosition.get(i);
             if (currentPosition.equalsPosition(currentPiece.getPiecePosition())){
                 currentPosition.setPiece(currentPiece);
+                break;
             }
         }
     }

@@ -52,10 +52,11 @@ public class DeskView extends JPanel {
         return false;
     }
 
-    public void moveCurrentPiece(CheckerboardPosition newPosition){
-        currentPiece.goToPosition(newPosition);
-        deskModel.removePieceFromPosition(currentPiece.getPieceModel());
-        currentPiece.getPieceModel().setPiecePosition(newPosition);
+    public void movePiece(PieceView pieceView, CheckerboardPosition newPosition){
+        pieceView.goToPosition(newPosition);
+        deskModel.removePieceFromPosition(pieceView.getPieceModel());
+        pieceView.getPieceModel().setPiecePosition(newPosition);
+        pieceView.getPieceModel().setUsing(true);
         deskModel.addPieceOnPosition(currentPiece.getPieceModel());
     }
 
@@ -156,7 +157,11 @@ public class DeskView extends JPanel {
         for (int i = 0; i < n; i++) {
             currentPosition = allCandidate.get(i);
             if (currentPosition.getPiece() != null){
-                leadRound(Color.red, currentPosition);
+                if (currentPosition.getPiece().getColor().equals(getWalkethPlayer())){
+                    leadRound(Color.green, currentPosition);
+                } else {
+                    leadRound(Color.red, currentPosition);
+                }
             }
         }
     }

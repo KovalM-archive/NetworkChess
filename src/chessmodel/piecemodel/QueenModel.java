@@ -26,4 +26,8 @@ public class QueenModel extends PieceModel {
         return allCandidate;
     }
 
+    @Override
+    public List<PositionWithPiece> getAtackPositions(DeskModel deskModel) {
+        return getAllCandidate(deskModel);
+    }
 }

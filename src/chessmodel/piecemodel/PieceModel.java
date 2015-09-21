@@ -9,10 +9,12 @@ import java.util.List;
 public abstract class PieceModel {
     protected String color;
     protected CheckerboardPosition piecePosition;
+    protected boolean using;
 
     public PieceModel(String color, CheckerboardPosition piecePosition){
         setColor(color);
         setPiecePosition(piecePosition);
+        setUsing(false);
     }
 
     public String getColor() {
@@ -28,6 +30,7 @@ public abstract class PieceModel {
     }
 
     public abstract List<PositionWithPiece> getAllCandidate(DeskModel deskModel);
+    public abstract List<PositionWithPiece> getAtackPositions(DeskModel deskModel);
     public void setPiecePosition(CheckerboardPosition piecePosition) {
         this.piecePosition = piecePosition;
     }
@@ -70,5 +73,11 @@ public abstract class PieceModel {
                 }
             }
         }
+    }
+    public boolean isUsing(){
+        return using;
+    }
+    public void setUsing(boolean using){
+        this.using = using;
     }
 }
