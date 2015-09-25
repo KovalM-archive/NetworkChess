@@ -3,13 +3,11 @@ package chessmodel.piecemodel;
 import chessmodel.DeskModel;
 import chessmodel.PositionWithPiece;
 import chessmodel.CheckerboardPosition;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.util.LineInputStream;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BishopModel extends PieceModel {
-
     public BishopModel(String color, CheckerboardPosition piecePosition) {
         super(color, piecePosition);
     }
@@ -20,11 +18,14 @@ public class BishopModel extends PieceModel {
         passDirection(1, -1, deskModel, allCandidate);
         passDirection(-1, 1, deskModel, allCandidate);
         passDirection(-1, -1, deskModel, allCandidate);
+        if (deskModel.getWalkethPlayer().equals(color)) {
+            checkForOccurrenceShah(deskModel, allCandidate);
+        }
         return allCandidate;
     }
 
     @Override
-    public List<PositionWithPiece> getAtackPositions(DeskModel deskModel) {
+    public List<PositionWithPiece> getAttackedPositions(DeskModel deskModel) {
         return getAllCandidate(deskModel);
     }
 }

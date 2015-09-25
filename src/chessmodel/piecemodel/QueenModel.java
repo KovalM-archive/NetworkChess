@@ -23,11 +23,14 @@ public class QueenModel extends PieceModel {
         passDirection(0, 1, deskModel, allCandidate);
         passDirection(-1, 0, deskModel, allCandidate);
         passDirection(0, -1, deskModel, allCandidate);
+        if (deskModel.getWalkethPlayer().equals(color)) {
+            checkForOccurrenceShah(deskModel, allCandidate);
+        }
         return allCandidate;
     }
 
     @Override
-    public List<PositionWithPiece> getAtackPositions(DeskModel deskModel) {
+    public List<PositionWithPiece> getAttackedPositions(DeskModel deskModel) {
         return getAllCandidate(deskModel);
     }
 }

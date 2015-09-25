@@ -6,7 +6,6 @@ import chessmodel.CheckerboardPosition;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class KingModel extends PieceModel {
     public KingModel(String color, CheckerboardPosition piecePosition) {
@@ -26,10 +25,11 @@ public class KingModel extends PieceModel {
         passNeighboringCells(1, -1, deskModel, allCandidate);
         if (deskModel.getWalkethPlayer().equals(color)){
             removeBrokenCells(deskModel, allCandidate);
+            checkForOccurrenceShah(deskModel, allCandidate);
             if (!using){
-                PositionWithPiece rookPosition = checkRokirovka(deskModel, color.equals("white")?7:0, 0);
+                PositionWithPiece rookPosition = checkCasting(deskModel, color.equals("white") ? 7 : 0, 0);
                 if (rookPosition!=null) allCandidate.add(rookPosition);
-                rookPosition = checkRokirovka(deskModel, color.equals("white")?7:0, 7);
+                rookPosition = checkCasting(deskModel, color.equals("white") ? 7 : 0, 7);
                 if (rookPosition!=null) allCandidate.add(rookPosition);
             }
         }
@@ -37,19 +37,20 @@ public class KingModel extends PieceModel {
     }
 
     @Override
-    public List<PositionWithPiece> getAtackPositions(DeskModel deskModel) {
+    public List<PositionWithPiece> getAttackedPositions(DeskModel deskModel) {
         return getAllCandidate(deskModel);
     }
 
     private void removeBrokenCells(DeskModel deskModel, List<PositionWithPiece> allCandidate){
         List<PositionWithPiece> allPosition = deskModel.getAllPosition();
         List<PositionWithPiece> aliensCandidate;
-        int n = allPosition.size();
         PieceModel currentPiece;
+
+        int n = allPosition.size();
         for (int i = 0; i < n; i++) {
             currentPiece = allPosition.get(i).getPiece();
             if (currentPiece != null && !currentPiece.getColor().equals(color)){
-                aliensCandidate = currentPiece.getAtackPositions(deskModel);
+                aliensCandidate = currentPiece.getAttackedPositions(deskModel);
                 for (PositionWithPiece currentPosition : aliensCandidate){
                     if (allCandidate.contains(currentPosition)){
                         allCandidate.remove(currentPosition);
@@ -59,8 +60,7 @@ public class KingModel extends PieceModel {
         }
     }
 
-    public PositionWithPiece checkRokirovka(DeskModel deskModel, int row, int column){
-        List<PositionWithPiece> allPosition = deskModel.getAllPosition();
+    public PositionWithPiece checkCasting(DeskModel deskModel, int row, int column){
         PositionWithPiece rookPosition = deskModel.getEqualElement(new CheckerboardPosition(row, column));
         PieceModel rook = rookPosition.getPiece();
         PositionWithPiece answer = null;

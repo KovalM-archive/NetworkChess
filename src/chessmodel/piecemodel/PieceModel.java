@@ -4,6 +4,7 @@ import chessmodel.DeskModel;
 import chessmodel.PositionWithPiece;
 import chessmodel.CheckerboardPosition;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class PieceModel {
@@ -17,24 +18,37 @@ public abstract class PieceModel {
         setUsing(false);
     }
 
+    protected void checkForOccurrenceShah(DeskModel deskModel, List<PositionWithPiece> allCandidate){
+        List<PositionWithPiece> allPosition = deskModel.getAllPosition();
+        List<PositionWithPiece> allCandidateCopy = new ArrayList<>(allCandidate);
+        PieceModel oldPiece;
+
+        for (PositionWithPiece currentPosition : allCandidateCopy){
+            deskModel.getEqualElement(piecePosition).setPiece(null);
+            oldPiece = deskModel.getEqualElement(currentPosition).getPiece();
+            deskModel.getEqualElement(currentPosition).setPiece(this);
+            if (deskModel.checkShahThreat(color, allPosition)) {
+                allCandidate.remove(currentPosition);
+            }
+            deskModel.getEqualElement(piecePosition).setPiece(this);
+            deskModel.getEqualElement(currentPosition).setPiece(oldPiece);
+        }
+    }
+
     public String getColor() {
         return color;
     }
-
     public void setColor(String color) {
         this.color = color;
     }
-
     public CheckerboardPosition getPiecePosition() {
         return piecePosition;
     }
-
     public abstract List<PositionWithPiece> getAllCandidate(DeskModel deskModel);
-    public abstract List<PositionWithPiece> getAtackPositions(DeskModel deskModel);
+    public abstract List<PositionWithPiece> getAttackedPositions(DeskModel deskModel);
     public void setPiecePosition(CheckerboardPosition piecePosition) {
         this.piecePosition = piecePosition;
     }
-
     protected void passDirection(int factor1, int factor2, DeskModel deskModel, List<PositionWithPiece> allCandidate){
         int row = piecePosition.getRow();
         int column = piecePosition.getColumn();

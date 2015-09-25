@@ -23,11 +23,14 @@ public class KnightModel extends PieceModel {
         passNeighboringCells(2, -1, deskModel, allCandidate);
         passNeighboringCells(-2, 1, deskModel, allCandidate);
         passNeighboringCells(-2, -1, deskModel, allCandidate);
+        if (deskModel.getWalkethPlayer().equals(color)) {
+            checkForOccurrenceShah(deskModel, allCandidate);
+        }
         return allCandidate;
     }
 
     @Override
-    public List<PositionWithPiece> getAtackPositions(DeskModel deskModel) {
+    public List<PositionWithPiece> getAttackedPositions(DeskModel deskModel) {
         return getAllCandidate(deskModel);
     }
 }

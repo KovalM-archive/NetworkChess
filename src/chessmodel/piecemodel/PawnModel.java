@@ -24,13 +24,13 @@ public class PawnModel extends PieceModel {
             currentPosition = deskModel.getEqualElement(new CheckerboardPosition(row + factor1, column));
             if (currentPosition != null && currentPosition.getPiece()==null){
                 allCandidate.add(currentPosition);
-            }
-        }
-        if ((color.equals("white") && row==6) || (color.equals("black") && row==1)){
-            if (deskModel.checkDeskBorder(row + 2*factor1, column)) {
-                currentPosition = deskModel.getEqualElement(new CheckerboardPosition(row + 2*factor1, column));
-                if (currentPosition != null && currentPosition.getPiece()==null){
-                    allCandidate.add(currentPosition);
+                if ((color.equals("white") && row==6) || (color.equals("black") && row==1)){
+                    if (deskModel.checkDeskBorder(row + 2*factor1, column)) {
+                        currentPosition = deskModel.getEqualElement(new CheckerboardPosition(row + 2*factor1, column));
+                        if (currentPosition != null && currentPosition.getPiece()==null){
+                            allCandidate.add(currentPosition);
+                        }
+                    }
                 }
             }
         }
@@ -50,11 +50,14 @@ public class PawnModel extends PieceModel {
                 allCandidate.add(currentPosition);
             }
         }
+        if (deskModel.getWalkethPlayer().equals(color)) {
+            checkForOccurrenceShah(deskModel, allCandidate);
+        }
         return allCandidate;
     }
 
     @Override
-    public List<PositionWithPiece> getAtackPositions(DeskModel deskModel) {
+    public List<PositionWithPiece> getAttackedPositions(DeskModel deskModel) {
         List<PositionWithPiece> allCandidate = new ArrayList<>();
         int row = piecePosition.getRow();
         int column = piecePosition.getColumn();

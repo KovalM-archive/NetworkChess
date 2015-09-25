@@ -1,5 +1,6 @@
 package chessmodel;
 
+import chessmodel.piecemodel.KingModel;
 import chessmodel.piecemodel.PieceModel;
 
 import java.util.ArrayList;
@@ -89,11 +90,39 @@ public class DeskModel {
     public void setAllCandidate(List<PositionWithPiece> allCandidate) {
         this.allCandidate = allCandidate;
     }
-    public boolean checkDeskBorder(int x, int y){
-        if (0<=x && x<=7 && 0<=y && y<=7){
+    public boolean checkDeskBorder(int x, int y) {
+        if (0 <= x && x <= 7 && 0 <= y && y <= 7) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public boolean checkShahThreat(String playerColor, List<PositionWithPiece> allPositionFutureState){
+        boolean answer = false;
+        PositionWithPiece kingPosition = null;
+        PieceModel enemyPiece;
+        List<PositionWithPiece> attackedPosition;
+
+        for (PositionWithPiece currentPosition : allPositionFutureState){
+            if (currentPosition.getPiece()!=null && currentPosition.getPiece().getColor().equals(playerColor) &&
+                    currentPosition.getPiece() instanceof KingModel){
+                kingPosition = currentPosition;
+                break;
+            }
+        }
+
+        for (PositionWithPiece currentPosition : allPositionFutureState){
+            enemyPiece = currentPosition.getPiece();
+            if (enemyPiece!=null && !enemyPiece.getColor().equals(playerColor) &&
+                    enemyPiece != null){
+                attackedPosition = enemyPiece.getAttackedPositions(this);
+                if (attackedPosition.contains(kingPosition)) {
+                    answer = true;
+                    break;
+                }
+            }
+        }
+        return answer;
     }
 }
