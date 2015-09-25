@@ -22,6 +22,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.Font;
+import java.net.Socket;
 import java.util.List;
 
 public class DeskView extends JPanel {
@@ -29,7 +30,7 @@ public class DeskView extends JPanel {
     private PieceView currentPiece;
     private DeskModel deskModel;
 
-    public DeskView(){
+    public DeskView(Socket socket){
         super();
         setLayout(null);
         buffer = new BufferedImage(1500, 1500, BufferedImage.TYPE_INT_ARGB);

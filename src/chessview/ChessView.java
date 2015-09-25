@@ -1,5 +1,6 @@
 package chessview;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -8,15 +9,13 @@ import java.awt.Toolkit;
 
 public class ChessView {
     public ChessView(){
-        JFrame mainWindow = new JFrame("Chess");
-        mainWindow.setLayout(new BorderLayout());
-        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainWindow.setLocationRelativeTo(null);
-        Dimension sSize = Toolkit.getDefaultToolkit().getScreenSize ();
-        mainWindow.setSize(sSize);
-        mainWindow.setVisible(true);
-        mainWindow.setExtendedState(Frame.MAXIMIZED_BOTH);
-
-        mainWindow.add(new DeskView());
+        JDialog chooseConnectionDialog = new JDialog();
+        chooseConnectionDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        chooseConnectionDialog.setSize(200, 150);
+        chooseConnectionDialog.setLocationRelativeTo(null);
+        chooseConnectionDialog.setVisible(true);
+        chooseConnectionDialog.setLayout(new BorderLayout());
+        chooseConnectionDialog.setModal(true);
+        chooseConnectionDialog.add(new ChooseWayToConnectPanel(chooseConnectionDialog));
     }
 }
