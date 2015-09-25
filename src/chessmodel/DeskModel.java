@@ -125,4 +125,19 @@ public class DeskModel {
         }
         return answer;
     }
+
+    public boolean checkForCheckmate(){
+        boolean answer = true;
+        PieceModel currentPiece;
+        for(PositionWithPiece currentPosition : allPosition){
+            currentPiece = currentPosition.getPiece();
+            if (currentPiece != null && currentPiece.getColor().equals(walkethPlayer)){
+                if (currentPiece.getAllCandidate(this).size()>0){
+                    answer = false;
+                    break;
+                }
+            }
+        }
+        return answer;
+    }
 }

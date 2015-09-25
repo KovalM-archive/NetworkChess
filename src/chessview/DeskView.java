@@ -13,11 +13,13 @@ import chessview.pieceview.RookView;
 import gameplay.ClickOnDeskListener;
 import gameplay.ClickOnPieceListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.Font;
 import java.util.List;
@@ -77,6 +79,24 @@ public class DeskView extends JPanel {
 
     public void changePlayer(){
         deskModel.changePlayer();
+        if (deskModel.checkForCheckmate()){
+            deskModel.changePlayer();
+            endGame();
+            JOptionPane.showMessageDialog(this, "CHECKMATE. Win " + getWalkethPlayer() + " player.");
+        }
+    }
+    private void endGame(){
+        PieceView currentPiece;
+        int numberOfPiece = getComponentCount();
+        for (int i = 0; i < numberOfPiece; i++) {
+            currentPiece = (PieceView)getComponent(i);
+            if (currentPiece instanceof PieceView){
+                MouseListener[] allMouseListeners = currentPiece.getMouseListeners();
+                for (MouseListener currentMouseListener : allMouseListeners){
+                    currentPiece.removeMouseListener(currentMouseListener);
+                }
+            }
+        }
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
