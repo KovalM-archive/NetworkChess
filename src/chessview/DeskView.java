@@ -3,11 +3,18 @@ package chessview;
 import chessmodel.CheckerboardPosition;
 import chessmodel.DeskModel;
 import chessmodel.PositionWithPiece;
+import chessmodel.piecemodel.BishopModel;
+import chessmodel.piecemodel.KnightModel;
+import chessmodel.piecemodel.PawnModel;
+import chessmodel.piecemodel.PieceModel;
+import chessmodel.piecemodel.QueenModel;
+import chessmodel.piecemodel.RookModel;
 import chessview.pieceview.BishopView;
 import chessview.pieceview.KingView;
 import chessview.pieceview.KnightView;
 import chessview.pieceview.PawnView;
 import chessview.pieceview.PieceView;
+import chessview.pieceview.PieceViewConstants;
 import chessview.pieceview.QueenView;
 import chessview.pieceview.RookView;
 import gameplay.ClickOnDeskListener;
@@ -61,6 +68,50 @@ public class DeskView extends JPanel {
         pieceView.getPieceModel().setPiecePosition(newPosition);
         pieceView.getPieceModel().setUsing(true);
         deskModel.addPieceOnPosition(currentPiece.getPieceModel());
+        checkPawnToEnd();
+    }
+
+    private void checkPawnToEnd(){
+        if (currentPiece==null) return;
+        if (currentPiece.getPieceModel() instanceof PawnModel){
+            PawnModel pawnPieceModel = (PawnModel)currentPiece.getPieceModel();
+            if (pawnPieceModel.checkPositionForEnd()){
+                String choosingPieceName = (String)JOptionPane.showInputDialog(this,
+                        "Choose new piece",
+                        "Choose pieces view",
+                        JOptionPane.DEFAULT_OPTION,
+                        null,
+                        PieceViewConstants.PIECE_NAME,
+                        PieceViewConstants.PIECE_NAME[0]);
+                if (choosingPieceName == null){
+                    choosingPieceName = PieceViewConstants.PIECE_NAME[0];
+                }
+
+                if (choosingPieceName.equals(PieceViewConstants.PIECE_NAME[0])){
+                    currentPiece.setPieceModel(new QueenModel(currentPiece.getColor(),currentPiece.getCurrentPosition()));
+                    currentPiece.setPiecePicture(currentPiece.getColor().equals("black") ?
+                            PieceViewConstants.BLACK_QUEEN :
+                            PieceViewConstants.WHITE_QUEEN);
+                } else if (choosingPieceName.equals(PieceViewConstants.PIECE_NAME[1])){
+                    currentPiece.setPieceModel(new RookModel(currentPiece.getColor(),currentPiece.getCurrentPosition()));
+                    currentPiece.setPiecePicture(currentPiece.getColor().equals("black") ?
+                            PieceViewConstants.BLACK_ROOK :
+                            PieceViewConstants.WHITE_ROOK);
+                } else if (choosingPieceName.equals(PieceViewConstants.PIECE_NAME[2])){
+                    currentPiece.setPieceModel(new BishopModel(currentPiece.getColor(),currentPiece.getCurrentPosition()));
+                    currentPiece.setPiecePicture(currentPiece.getColor().equals("black") ?
+                            PieceViewConstants.BLACK_BISHOP :
+                            PieceViewConstants.WHITE_BISHOP);
+                } else if (choosingPieceName.equals(PieceViewConstants.PIECE_NAME[3])){
+                    currentPiece.setPieceModel(new KnightModel(currentPiece.getColor(),currentPiece.getCurrentPosition()));
+                    currentPiece.setPiecePicture(currentPiece.getColor().equals("black") ?
+                            PieceViewConstants.BLACK_KNIGHT :
+                            PieceViewConstants.WHITE_KNIGHT);
+                }
+                PositionWithPiece currentPosition = deskModel.getEqualElement(currentPiece.getCurrentPosition());
+                currentPosition.setPiece(currentPiece.getPieceModel());
+            }
+        }
     }
 
     private void setPieceInDeskModel(){

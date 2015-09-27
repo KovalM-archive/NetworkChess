@@ -15,4 +15,5 @@ public final class PieceViewConstants {
     public final static ImageIcon WHITE_KNIGHT = new ImageIcon("image/whiteKnight.png");
     public final static ImageIcon WHITE_ROOK = new ImageIcon("image/whiteRook.png");
     public final static ImageIcon WHITE_PAWN = new ImageIcon("image/whitePawn.png");
+    public final static String[] PIECE_NAME = {"Queen", "Rook", "Bishop", "Knight"};
 }

@@ -16,7 +16,7 @@ public abstract class PieceView extends JLabel {
         setBackground(new Color(255, 255, 255, 0));
     }
 
-    protected void setPiecePicture(ImageIcon piecePicture) {
+    public void setPiecePicture(ImageIcon piecePicture) {
         setIcon(piecePicture);
     }
 

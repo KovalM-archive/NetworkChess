@@ -33,7 +33,7 @@ public class ConnectListener implements ActionListener {
         mainWindow.setSize(sSize);
         mainWindow.setVisible(true);
         mainWindow.setExtendedState(Frame.MAXIMIZED_BOTH);
-        DeskView deskView = new DeskView();
+        DeskView deskView = new DeskView(socket);
         mainWindow.add(deskView);
 
         String nameHost;

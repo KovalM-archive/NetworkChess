@@ -75,4 +75,12 @@ public class PawnModel extends PieceModel {
         }
         return allCandidate;
     }
+
+    public boolean checkPositionForEnd() {
+        if (piecePosition.getRow() == 7 || piecePosition.getRow() == 0){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
