@@ -1,6 +1,8 @@
 package chessmodel;
 
-public class CheckerboardPosition {
+import java.io.Serializable;
+
+public class CheckerboardPosition implements Serializable {
     private int row;
     private int column;
 

@@ -33,14 +33,10 @@ public class ConnectListener implements ActionListener {
         mainWindow.setSize(sSize);
         mainWindow.setVisible(true);
         mainWindow.setExtendedState(Frame.MAXIMIZED_BOTH);
-        DeskView deskView = new DeskView(socket);
-        mainWindow.add(deskView);
-
         String nameHost;
         socket = null;
         boolean flag = false;
-
-        while (true){
+        while (!flag){
             try {
                 nameHost = JOptionPane.showInputDialog("Enter name of host");
                 socket = new Socket(nameHost, 4569);
@@ -49,10 +45,8 @@ public class ConnectListener implements ActionListener {
                 JOptionPane.showMessageDialog(mainWindow,"No connected to host");
                 exception.printStackTrace();
             }
-
-            if (flag){
-                break;
-            }
         }
+
+        mainWindow.add(new DeskView(socket, "black"));
     }
 }

@@ -10,6 +10,7 @@ public class DeskModel {
     private String walkethPlayer;
     private List<PositionWithPiece> allPosition;
     private List<PositionWithPiece> allCandidate;
+    private String colorOfPlayer;
 
     public DeskModel(){
         setWalkethPlayer("white");
@@ -139,5 +140,13 @@ public class DeskModel {
             }
         }
         return answer;
+    }
+
+    public String getColorOfPlayer() {
+        return colorOfPlayer;
+    }
+
+    public void setColorOfPlayer(String colorOfPlayer) {
+        this.colorOfPlayer = colorOfPlayer;
     }
 }

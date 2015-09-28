@@ -23,10 +23,9 @@ public class ClickOnDeskListener implements MouseListener {
         if (currentPiece != null) {
             if (0 < x && x <= 720 && 0 < y && y <= 720) {
                 newPosition = new CheckerboardPosition(y/=90, x /= 90);
-                if (deskView.isLelagMove(newPosition)){
+                if (deskView.isLegalMove(newPosition)){
+                    deskView.sendTypeMove("simple");
                     deskView.movePiece(currentPiece, newPosition);
-                    deskView.changePlayer();
-                    deskView.setCurrentPiece(null);
                 }
             }
         }

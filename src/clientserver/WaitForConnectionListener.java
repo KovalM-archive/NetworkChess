@@ -17,14 +17,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class WaitForConnectionListener implements ActionListener, Runnable {
+public class WaitForConnectionListener implements ActionListener{
     private JDialog chooseConnectionDialog;
     private Socket socket;
-    private Thread thread;
 
     public WaitForConnectionListener(JDialog chooseConnectionDialog){
         this.chooseConnectionDialog = chooseConnectionDialog;
-        thread = new Thread();
     }
 
     @Override
@@ -42,15 +40,9 @@ public class WaitForConnectionListener implements ActionListener, Runnable {
         try {
             ServerSocket serverSocket = new ServerSocket(4569);
             socket = serverSocket.accept();
-            DeskView deskView = new DeskView(socket);
-            mainWindow.add(deskView);
+            mainWindow.add(new DeskView(socket, "white"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-
-    @Override
-    public void run() {
-
     }
 }

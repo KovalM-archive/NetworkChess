@@ -8,22 +8,22 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class ClickOnPieceListener implements MouseListener{
-    private DeskView gameDesk;
+    private DeskView deskView;
     private PieceView choosePiece;
 
-    public ClickOnPieceListener(DeskView gamesDesk, PieceView choosePiece){
-        this.gameDesk = gamesDesk;
+    public ClickOnPieceListener(DeskView deskView, PieceView choosePiece){
+        this.deskView = deskView;
         this.choosePiece = choosePiece;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        PieceView currentPiece = gameDesk.getCurrentPiece();
-        if (choosePiece.getColor().equals(gameDesk.getWalkethPlayer())){
+        PieceView currentPiece = deskView.getCurrentPiece();
+        if (choosePiece.getColor().equals(deskView.getWalkethPlayer())){
             if (choosePiece.equals(currentPiece)){
-                gameDesk.setCurrentPiece(null);
+                deskView.setCurrentPiece(null);
             } else {
-                if (currentPiece != null && gameDesk.isLelagMove(choosePiece.getCurrentPosition())){
+                if (currentPiece != null){
                     CheckerboardPosition kingPosition = currentPiece.getCurrentPosition();
                     CheckerboardPosition rookPosition = choosePiece.getCurrentPosition();
                     int newKingColumn;
@@ -35,22 +35,18 @@ public class ClickOnPieceListener implements MouseListener{
                         newKingColumn = kingPosition.getColumn() + 2;
                         newRookColumn = newKingColumn - 1;
                     }
-                    gameDesk.movePiece(currentPiece, new CheckerboardPosition(kingPosition.getRow(), newKingColumn));
-                    gameDesk.movePiece(choosePiece, new CheckerboardPosition(kingPosition.getRow(), newRookColumn));
-                    gameDesk.changePlayer();
-                    currentPiece.notChoose();
-                    gameDesk.setCurrentPiece(null);
+                    deskView.sendTypeMove("castling");
+                    deskView.movePiece(currentPiece, new CheckerboardPosition(kingPosition.getRow(), newKingColumn));
+                    deskView.movePiece(choosePiece, new CheckerboardPosition(kingPosition.getRow(), newRookColumn));
                 } else {
-                    gameDesk.setCurrentPiece(choosePiece);
+                    deskView.setCurrentPiece(choosePiece);
                 }
             }
         } else{
-            if (currentPiece != null && gameDesk.isLelagMove(choosePiece.getCurrentPosition())) {
-                gameDesk.movePiece(currentPiece, choosePiece.getCurrentPosition());
-                gameDesk.remove(choosePiece);
-                gameDesk.changePlayer();
-                currentPiece.notChoose();
-                gameDesk.setCurrentPiece(null);
+            if (currentPiece != null) {
+                deskView.remove(choosePiece);
+                deskView.sendTypeMove("simple");
+                deskView.movePiece(currentPiece, choosePiece.getCurrentPosition());
             }
         }
     }

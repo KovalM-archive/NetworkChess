@@ -20,6 +20,7 @@ import chessview.pieceview.RookView;
 import gameplay.ClickOnDeskListener;
 import gameplay.ClickOnPieceListener;
 
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BasicStroke;
@@ -29,6 +30,9 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.Font;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
 
@@ -36,20 +40,99 @@ public class DeskView extends JPanel {
     private BufferedImage buffer;
     private PieceView currentPiece;
     private DeskModel deskModel;
+    private ObjectOutputStream outputStream;
+    private ObjectInputStream inputStream;
+    private int passLeft;
 
-    public DeskView(Socket socket){
+    public DeskView(Socket socket, String colorOfPlayer){
         super();
         setLayout(null);
         buffer = new BufferedImage(1500, 1500, BufferedImage.TYPE_INT_ARGB);
         deskModel = new DeskModel();
+        deskModel.setColorOfPlayer(colorOfPlayer);
         drawDesk();
         setInitialState();
         addMouseListener(new ClickOnDeskListener(this));
         setPieceInDeskModel();
         setVisible(true);
+        try {
+            outputStream = new ObjectOutputStream(socket.getOutputStream());
+            inputStream = new ObjectInputStream(socket.getInputStream());
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+        if (colorOfPlayer.equals("black")){
+            waitMove();
+        }
     }
 
-    public boolean isLelagMove(CheckerboardPosition newPosition){
+    private void sendMove(CheckerboardPosition start, CheckerboardPosition finish){
+        passLeft--;
+        try {
+            outputStream.writeObject(start);
+            outputStream.writeObject(finish);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (passLeft==0){
+            waitMove();
+        }
+    }
+
+    public void sendTypeMove(String typeMove){
+        passLeft = typeMove.equals("simple")?1:2;
+        try {
+            outputStream.writeObject(typeMove);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void waitMove(){
+        String typeMove;
+        CheckerboardPosition start, finish;
+        while (true) {
+            try {
+                typeMove = (String) inputStream.readObject();
+                if (typeMove.equals("simple")){
+                    start = (CheckerboardPosition)inputStream.readObject();
+                    finish = (CheckerboardPosition)inputStream.readObject();
+                    movePiece(getPieceViewOnDesk(start), finish);
+                } else if (typeMove.equals("castling")){
+                    start = (CheckerboardPosition)inputStream.readObject();
+                    finish = (CheckerboardPosition)inputStream.readObject();
+                    movePiece(getPieceViewOnDesk(start), finish);
+                    start = (CheckerboardPosition)inputStream.readObject();
+                    finish = (CheckerboardPosition)inputStream.readObject();
+                    movePiece(getPieceViewOnDesk(start), finish);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private PieceView getPieceViewOnDesk(CheckerboardPosition piecePosition){
+        PieceView currentPiece;
+        PieceModel pieceModel = deskModel.getEqualElement(piecePosition).getPiece();
+        if (pieceModel == null) return null;
+        int numberOfPiece = getComponentCount();
+        for (int i = 0; i < numberOfPiece; i++) {
+            JComponent component = (JComponent)getComponent(i);
+            if (component instanceof PieceView){
+                currentPiece = (PieceView)component;
+                if (currentPiece.getPieceModel().equals(pieceModel)){
+                    return currentPiece;
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean isLegalMove(CheckerboardPosition newPosition){
         List<PositionWithPiece> allCandidate = deskModel.getAllCandidate();
         PositionWithPiece currentPosition;
         int n = allCandidate.size();
@@ -63,12 +146,17 @@ public class DeskView extends JPanel {
     }
 
     public void movePiece(PieceView pieceView, CheckerboardPosition newPosition){
+        CheckerboardPosition start = pieceView.getCurrentPosition();
+        CheckerboardPosition finish = newPosition;
+
         pieceView.goToPosition(newPosition);
         deskModel.removePieceFromPosition(pieceView.getPieceModel());
         pieceView.getPieceModel().setPiecePosition(newPosition);
         pieceView.getPieceModel().setUsing(true);
         deskModel.addPieceOnPosition(currentPiece.getPieceModel());
         checkPawnToEnd();
+        changePlayer();
+        setCurrentPiece(null);
     }
 
     private void checkPawnToEnd(){
@@ -141,8 +229,9 @@ public class DeskView extends JPanel {
         PieceView currentPiece;
         int numberOfPiece = getComponentCount();
         for (int i = 0; i < numberOfPiece; i++) {
-            currentPiece = (PieceView)getComponent(i);
-            if (currentPiece instanceof PieceView){
+            JComponent component = (JComponent)getComponent(i);
+            if (component instanceof PieceView){
+                currentPiece = (PieceView)component;
                 MouseListener[] allMouseListeners = currentPiece.getMouseListeners();
                 for (MouseListener currentMouseListener : allMouseListeners){
                     currentPiece.removeMouseListener(currentMouseListener);
@@ -150,6 +239,7 @@ public class DeskView extends JPanel {
             }
         }
     }
+
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
@@ -187,8 +277,9 @@ public class DeskView extends JPanel {
         PieceView currentPiece;
         int numberOfPiece = getComponentCount();
         for (int i = 0; i < numberOfPiece; i++) {
-            currentPiece = (PieceView)getComponent(i);
-            if (currentPiece instanceof PieceView){
+            JComponent component = (JComponent)getComponent(i);
+            if (component instanceof PieceView) {
+                currentPiece = (PieceView) component;
                 currentPiece.addMouseListener(new ClickOnPieceListener(this, currentPiece));
             }
         }
