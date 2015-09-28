@@ -40,13 +40,14 @@ public class ConnectListener implements ActionListener {
             try {
                 nameHost = JOptionPane.showInputDialog("Enter name of host");
                 socket = new Socket(nameHost, 4569);
+                DeskView deskView = new DeskView(socket, "black");
+                mainWindow.add(deskView);
+                deskView.waitMove();
                 flag = true;
             } catch (IOException exception) {
                 JOptionPane.showMessageDialog(mainWindow,"No connected to host");
                 exception.printStackTrace();
             }
         }
-
-        mainWindow.add(new DeskView(socket, "black"));
     }
 }

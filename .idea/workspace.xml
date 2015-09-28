@@ -26,13 +26,13 @@
       <file leaf-file-name="DeskView.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/chessview/DeskView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9265306">
-              <caret line="114" column="13" selection-start-line="114" selection-start-column="13" selection-end-line="114" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.52244896">
+              <caret line="119" column="7" selection-start-line="119" selection-start-column="7" selection-end-line="119" selection-end-column="7" />
               <folding>
-                <element signature="e#8901#8902#0" expanded="true" />
-                <element signature="e#8952#8953#0" expanded="true" />
-                <element signature="e#11426#11427#0" expanded="true" />
-                <element signature="e#11461#11462#0" expanded="true" />
+                <element signature="e#9795#9796#0" expanded="true" />
+                <element signature="e#9846#9847#0" expanded="true" />
+                <element signature="e#12320#12321#0" expanded="true" />
+                <element signature="e#12355#12356#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -101,7 +101,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="11" column="36" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -122,7 +124,7 @@
         <entry file="file://$PROJECT_DIR$/src/clientserver/ConnectListener.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+              <caret line="52" column="1" selection-start-line="52" selection-start-column="1" selection-end-line="52" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -196,10 +198,10 @@
         <option value="$PROJECT_DIR$/src/chessview/pieceview/PieceView.java" />
         <option value="$PROJECT_DIR$/src/chessmodel/DeskModel.java" />
         <option value="$PROJECT_DIR$/src/clientserver/WaitForConnectionListener.java" />
-        <option value="$PROJECT_DIR$/src/clientserver/ConnectListener.java" />
         <option value="$PROJECT_DIR$/src/chessmodel/CheckerboardPosition.java" />
         <option value="$PROJECT_DIR$/src/gameplay/ClickOnPieceListener.java" />
         <option value="$PROJECT_DIR$/src/gameplay/ClickOnDeskListener.java" />
+        <option value="$PROJECT_DIR$/src/clientserver/ConnectListener.java" />
         <option value="$PROJECT_DIR$/src/chessview/DeskView.java" />
       </list>
     </option>
@@ -371,7 +373,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../NetworkChessCopy" />
   </component>
   <component name="RunManager" selected="Application.Runner">
     <configuration default="false" name="Runner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -680,12 +682,12 @@
       <workItem from="1443210236667" duration="9899000" />
       <workItem from="1443241255028" duration="4314000" />
       <workItem from="1443371378056" duration="3071000" />
-      <workItem from="1443469909436" duration="6279000" />
+      <workItem from="1443469909436" duration="8934000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="150536000" />
+    <option name="totallyTimeSpent" value="153191000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="61" y="24" width="1305" height="744" extended-state="6" />
@@ -807,10 +809,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#8901#8902#0" expanded="true" />
-            <element signature="e#8952#8953#0" expanded="true" />
-            <element signature="e#11426#11427#0" expanded="true" />
-            <element signature="e#11461#11462#0" expanded="true" />
+            <element signature="e#9795#9796#0" expanded="true" />
+            <element signature="e#9846#9847#0" expanded="true" />
+            <element signature="e#12320#12321#0" expanded="true" />
+            <element signature="e#12355#12356#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -841,10 +843,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="23" column="49" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
           <folding>
-            <element signature="e#8901#8902#0" expanded="true" />
-            <element signature="e#8952#8953#0" expanded="true" />
-            <element signature="e#11426#11427#0" expanded="true" />
-            <element signature="e#11461#11462#0" expanded="true" />
+            <element signature="e#9795#9796#0" expanded="true" />
+            <element signature="e#9846#9847#0" expanded="true" />
+            <element signature="e#12320#12321#0" expanded="true" />
+            <element signature="e#12355#12356#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -868,10 +870,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="23" column="49" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
           <folding>
-            <element signature="e#8901#8902#0" expanded="true" />
-            <element signature="e#8952#8953#0" expanded="true" />
-            <element signature="e#11426#11427#0" expanded="true" />
-            <element signature="e#11461#11462#0" expanded="true" />
+            <element signature="e#9795#9796#0" expanded="true" />
+            <element signature="e#9846#9847#0" expanded="true" />
+            <element signature="e#12320#12321#0" expanded="true" />
+            <element signature="e#12355#12356#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1059,16 +1061,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="11" column="36" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/clientserver/ConnectListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1078,16 +1072,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="4" column="56" selection-start-line="4" selection-start-column="56" selection-end-line="4" selection-end-column="56" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/clientserver/WaitForConnectionListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="34" selection-start-line="43" selection-start-column="34" selection-end-line="43" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1131,15 +1115,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/clientserver/WaitForConnectionListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="43" column="34" selection-start-line="43" selection-start-column="34" selection-end-line="43" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clientserver/ConnectListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="52" column="1" selection-start-line="52" selection-start-column="1" selection-end-line="52" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/chessview/DeskView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9265306">
-          <caret line="114" column="13" selection-start-line="114" selection-start-column="13" selection-end-line="114" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.52244896">
+          <caret line="119" column="7" selection-start-line="119" selection-start-column="7" selection-end-line="119" selection-end-column="7" />
           <folding>
-            <element signature="e#8901#8902#0" expanded="true" />
-            <element signature="e#8952#8953#0" expanded="true" />
-            <element signature="e#11426#11427#0" expanded="true" />
-            <element signature="e#11461#11462#0" expanded="true" />
+            <element signature="e#9795#9796#0" expanded="true" />
+            <element signature="e#9846#9847#0" expanded="true" />
+            <element signature="e#12320#12321#0" expanded="true" />
+            <element signature="e#12355#12356#0" expanded="true" />
           </folding>
         </state>
       </provider>

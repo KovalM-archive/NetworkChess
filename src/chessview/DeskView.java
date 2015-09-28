@@ -63,13 +63,12 @@ public class DeskView extends JPanel {
             e.printStackTrace();
             System.exit(0);
         }
-        if (colorOfPlayer.equals("black")){
-            waitMove();
-        }
     }
 
     private void sendMove(CheckerboardPosition start, CheckerboardPosition finish){
         passLeft--;
+        System.out.println(start.getRow()+" "+start.getColumn());
+        System.out.println(finish.getRow()+" "+finish.getColumn());
         try {
             outputStream.writeObject(start);
             outputStream.writeObject(finish);
@@ -82,6 +81,7 @@ public class DeskView extends JPanel {
     }
 
     public void sendTypeMove(String typeMove){
+        System.out.println(typeMove);
         passLeft = typeMove.equals("simple")?1:2;
         try {
             outputStream.writeObject(typeMove);
@@ -90,23 +90,33 @@ public class DeskView extends JPanel {
         }
     }
 
-    private void waitMove(){
+    public void waitMove(){
         String typeMove;
         CheckerboardPosition start, finish;
         while (true) {
             try {
                 typeMove = (String) inputStream.readObject();
+                System.out.println(typeMove);
                 if (typeMove.equals("simple")){
                     start = (CheckerboardPosition)inputStream.readObject();
                     finish = (CheckerboardPosition)inputStream.readObject();
-                    movePiece(getPieceViewOnDesk(start), finish);
+                    movePieceOnDesk(getPieceViewOnDesk(start), finish);
+                    System.out.println(start.getRow()+" "+start.getColumn());
+                    System.out.println(finish.getRow()+" "+finish.getColumn());
+                    break;
                 } else if (typeMove.equals("castling")){
                     start = (CheckerboardPosition)inputStream.readObject();
                     finish = (CheckerboardPosition)inputStream.readObject();
-                    movePiece(getPieceViewOnDesk(start), finish);
+                    movePieceOnDesk(getPieceViewOnDesk(start), finish);
+                    System.out.println(start.getRow()+" "+start.getColumn());
+                    System.out.println(finish.getRow()+" "+finish.getColumn());
                     start = (CheckerboardPosition)inputStream.readObject();
                     finish = (CheckerboardPosition)inputStream.readObject();
-                    movePiece(getPieceViewOnDesk(start), finish);
+                    movePieceOnDesk(getPieceViewOnDesk(start), finish);
+                    System.out.println(start.getRow()+" "+start.getColumn());
+                    System.out.println(finish.getRow()+" "+finish.getColumn());
+                    changePlayer();
+                    break;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -148,17 +158,20 @@ public class DeskView extends JPanel {
     public void movePiece(PieceView pieceView, CheckerboardPosition newPosition){
         CheckerboardPosition start = pieceView.getCurrentPosition();
         CheckerboardPosition finish = newPosition;
+        movePieceOnDesk(pieceView, newPosition);
+        changePlayer();
+        setCurrentPiece(null);
+        sendMove(start, finish);
+    }
 
+    private void movePieceOnDesk(PieceView pieceView, CheckerboardPosition newPosition){
         pieceView.goToPosition(newPosition);
         deskModel.removePieceFromPosition(pieceView.getPieceModel());
         pieceView.getPieceModel().setPiecePosition(newPosition);
         pieceView.getPieceModel().setUsing(true);
-        deskModel.addPieceOnPosition(currentPiece.getPieceModel());
+        deskModel.addPieceOnPosition(pieceView.getPieceModel());
         checkPawnToEnd();
-        changePlayer();
-        setCurrentPiece(null);
     }
-
     private void checkPawnToEnd(){
         if (currentPiece==null) return;
         if (currentPiece.getPieceModel() instanceof PawnModel){
