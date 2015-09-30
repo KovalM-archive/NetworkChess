@@ -19,7 +19,6 @@ import java.net.Socket;
 
 public class WaitForConnectionListener implements ActionListener{
     private JDialog chooseConnectionDialog;
-    private Socket socket;
 
     public WaitForConnectionListener(JDialog chooseConnectionDialog){
         this.chooseConnectionDialog = chooseConnectionDialog;
@@ -28,7 +27,7 @@ public class WaitForConnectionListener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         chooseConnectionDialog.setVisible(false);
-        JFrame mainWindow = new JFrame("Chess");
+        JFrame mainWindow = new JFrame("Chess server");
         mainWindow.setLayout(new BorderLayout());
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainWindow.setLocationRelativeTo(null);
@@ -39,7 +38,7 @@ public class WaitForConnectionListener implements ActionListener{
         mainWindow.setBackground(Color.gray);
         try {
             ServerSocket serverSocket = new ServerSocket(4569);
-            socket = serverSocket.accept();
+            Socket socket = serverSocket.accept();
             mainWindow.add(new DeskView(socket, "white"));
         } catch (IOException ex) {
             ex.printStackTrace();

@@ -17,7 +17,7 @@ import java.net.Socket;
 
 public class ConnectListener implements ActionListener {
     private JDialog chooseConnectionDialog;
-    private Socket socket;
+
     public ConnectListener(JDialog chooseConnectionDialog){
         this.chooseConnectionDialog = chooseConnectionDialog;
     }
@@ -34,15 +34,14 @@ public class ConnectListener implements ActionListener {
         mainWindow.setVisible(true);
         mainWindow.setExtendedState(Frame.MAXIMIZED_BOTH);
         String nameHost;
-        socket = null;
         boolean flag = false;
         while (!flag){
             try {
                 nameHost = JOptionPane.showInputDialog("Enter name of host");
-                socket = new Socket(nameHost, 4569);
+                Socket socket = new Socket(nameHost, 4569);
                 DeskView deskView = new DeskView(socket, "black");
                 mainWindow.add(deskView);
-                deskView.waitMove();
+                deskView.changePlayer();
                 flag = true;
             } catch (IOException exception) {
                 JOptionPane.showMessageDialog(mainWindow,"No connected to host");
