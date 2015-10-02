@@ -18,10 +18,13 @@ import chessview.pieceview.PieceViewConstants;
 import chessview.pieceview.QueenView;
 import chessview.pieceview.RookView;
 import clientserver.ConnectionWithOpponent;
+import gameplay.ChangeMoveListener;
 import gameplay.ClickOnDeskListener;
 import gameplay.ClickOnPieceListener;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BasicStroke;
@@ -31,9 +34,6 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.Font;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
 
@@ -42,24 +42,50 @@ public class DeskView extends JPanel {
     private PieceView currentPiece;
     private DeskModel deskModel;
     private ConnectionWithOpponent connectionWithOpponent;
+    private JLabel moveInformationLabel;
+    private JButton changerMove;
 
     public DeskView(Socket socket, String colorOfPlayer){
         super();
         setLayout(null);
         buffer = new BufferedImage(1500, 1500, BufferedImage.TYPE_INT_ARGB);
-        deskModel = new DeskModel();
+        deskModel = new DeskModel(colorOfPlayer);
+        connectionWithOpponent = new ConnectionWithOpponent(socket,this);
         deskModel.setColorOfPlayer(colorOfPlayer);
         drawDesk();
+
+        changerMove = new JButton("Move");
+        changerMove.addActionListener(new ChangeMoveListener(connectionWithOpponent, changerMove));
+        changerMove.setBounds(1100, 300, 90, 90);
+        add(changerMove);
+        JLabel playerColorLabel = new JLabel("You are " + colorOfPlayer);
+        playerColorLabel.setBounds(20, 0, 200, 100);
+        playerColorLabel.setFont(new Font(null, Font.ITALIC, 20));
+        add(playerColorLabel);
+        moveInformationLabel = new JLabel();
+        moveInformationLabel.setBounds(20, 200, 100, 200);
+        moveInformationLabel.setFont(new Font(null, Font.ITALIC, 25));
+        displayStartMove();
+        add(moveInformationLabel);
+
         setInitialState();
         addMouseListener(new ClickOnDeskListener(this));
         setPieceInDeskModel();
-        setVisible(true);
-        connectionWithOpponent = new ConnectionWithOpponent(socket,this);
+
         if (colorOfPlayer.equals("black")){
             connectionWithOpponent.waitMove();
         }
     }
 
+    public void displayEndMove(){
+        moveInformationLabel.setText("Wait!");
+        changerMove.setVisible(true);
+    }
+
+    public void displayStartMove(){
+        moveInformationLabel.setText("Go!");
+        changerMove.setVisible(false);
+    }
     public PieceView getPieceViewOnDesk(CheckerboardPosition piecePosition){
         PieceView currentPiece;
         PieceModel pieceModel = deskModel.getEqualElement(piecePosition).getPiece();
@@ -89,19 +115,19 @@ public class DeskView extends JPanel {
         }
         return false;
     }
-
+    public boolean isEndMove(){
+        return connectionWithOpponent.isEndMove();
+    }
     public void movePiece(PieceView pieceView, CheckerboardPosition newPosition){
         CheckerboardPosition start = pieceView.getCurrentPosition();
         CheckerboardPosition finish = newPosition;
-        System.out.println(currentPiece.getX() + " " + currentPiece.getY());
         movePieceOnDesk(pieceView, newPosition);
-        changePlayer();
-        System.out.println(currentPiece.getX() + " " + currentPiece.getY());
         setCurrentPiece(null);
         connectionWithOpponent.sendMove(start, finish);
     }
 
     public void movePieceOnDesk(PieceView pieceView, CheckerboardPosition newPosition){
+        removeToCoordinates(newPosition);
         pieceView.goToPosition(newPosition);
         deskModel.removePieceFromPosition(pieceView.getPieceModel());
         pieceView.getPieceModel().setPiecePosition(newPosition);
@@ -154,13 +180,28 @@ public class DeskView extends JPanel {
             }
         }
     }
+    public void removeToCoordinates(CheckerboardPosition position){
+        PieceView currentPiece;
+        int numberOfPiece = getComponentCount();
+        for (int i = 0; i < numberOfPiece; i++) {
+            JComponent component = (JComponent)getComponent(i);
+            if (component instanceof PieceView) {
+                currentPiece = (PieceView) component;
+                if (currentPiece.getCurrentPosition().equalsPosition(position)){
+                    remove(currentPiece);
+                    break;
+                }
+            }
+        }
+    }
 
     private void setPieceInDeskModel(){
         PieceView currentPiece;
         int numberOfPiece = getComponentCount();
         for (int i = 0; i < numberOfPiece; i++) {
-            currentPiece = (PieceView)getComponent(i);
-            if (currentPiece instanceof PieceView){
+            JComponent component = (JComponent)getComponent(i);
+            if (component instanceof PieceView){
+                currentPiece = (PieceView)getComponent(i);
                 deskModel.addPieceOnPosition(currentPiece.getPieceModel());
             }
         }
@@ -178,6 +219,7 @@ public class DeskView extends JPanel {
             JOptionPane.showMessageDialog(this, "CHECKMATE. Win " + getWalkethPlayer() + " player.");
         }
     }
+
     private void endGame(){
         PieceView currentPiece;
         int numberOfPiece = getComponentCount();
@@ -223,7 +265,6 @@ public class DeskView extends JPanel {
         for (int i = 0; i < 8; i++) {
             painter.drawString("" + (char)('A'+i), 335+i*90, 740);
         }
-        System.out.println(2222);
         repaint();
     }
 

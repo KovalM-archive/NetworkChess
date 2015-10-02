@@ -19,36 +19,40 @@ public class ClickOnPieceListener implements MouseListener{
     @Override
     public void mouseClicked(MouseEvent e) {
         PieceView currentPiece = deskView.getCurrentPiece();
-        if (choosePiece.getColor().equals(deskView.getWalkethPlayer())){
-            if (choosePiece.equals(currentPiece)){
-                deskView.setCurrentPiece(null);
-            } else {
-                if (currentPiece != null){
-                    CheckerboardPosition kingPosition = currentPiece.getCurrentPosition();
-                    CheckerboardPosition rookPosition = choosePiece.getCurrentPosition();
-                    int newKingColumn;
-                    int newRookColumn;
-                    if (kingPosition.getColumn() > rookPosition.getColumn()){
-                        newKingColumn = kingPosition.getColumn() - 2;
-                        newRookColumn = newKingColumn + 1;
-                    }else{
-                        newKingColumn = kingPosition.getColumn() + 2;
-                        newRookColumn = newKingColumn - 1;
-                    }
-                    deskView.sendTypeMove("castling");
-                    deskView.movePiece(currentPiece, new CheckerboardPosition(kingPosition.getRow(), newKingColumn));
-                    deskView.movePiece(choosePiece, new CheckerboardPosition(kingPosition.getRow(), newRookColumn));
+        if (!deskView.isEndMove()){
+            if (choosePiece.getColor().equals(deskView.getWalkethPlayer())){
+                if (choosePiece.equals(currentPiece)){
+                    deskView.setCurrentPiece(null);
                 } else {
-                    deskView.setCurrentPiece(choosePiece);
+                    if (currentPiece != null){
+                        CheckerboardPosition kingPosition = currentPiece.getCurrentPosition();
+                        CheckerboardPosition rookPosition = choosePiece.getCurrentPosition();
+                        int newKingColumn;
+                        int newRookColumn;
+                        if (kingPosition.getColumn() > rookPosition.getColumn()){
+                            newKingColumn = kingPosition.getColumn() - 2;
+                            newRookColumn = newKingColumn + 1;
+                        }else{
+                            newKingColumn = kingPosition.getColumn() + 2;
+                            newRookColumn = newKingColumn - 1;
+                        }
+                        deskView.sendTypeMove("castling");
+                        deskView.movePiece(currentPiece, new CheckerboardPosition(kingPosition.getRow(), newKingColumn));
+                        deskView.movePiece(choosePiece, new CheckerboardPosition(kingPosition.getRow(), newRookColumn));
+                        deskView.displayEndMove();
+                    } else {
+                        deskView.setCurrentPiece(choosePiece);
+                    }
+                }
+            } else{
+                if (currentPiece != null) {
+                    deskView.sendTypeMove("simple");
+                    deskView.movePiece(currentPiece, choosePiece.getCurrentPosition());
+                    deskView.displayEndMove();
                 }
             }
-        } else{
-            if (currentPiece != null) {
-                deskView.remove(choosePiece);
-                deskView.sendTypeMove("simple");
-                deskView.movePiece(currentPiece, choosePiece.getCurrentPosition());
-            }
         }
+
     }
 
     @Override

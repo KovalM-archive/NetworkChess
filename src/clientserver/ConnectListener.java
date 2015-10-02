@@ -41,7 +41,6 @@ public class ConnectListener implements ActionListener {
                 Socket socket = new Socket(nameHost, 4569);
                 DeskView deskView = new DeskView(socket, "black");
                 mainWindow.add(deskView);
-                deskView.changePlayer();
                 flag = true;
             } catch (IOException exception) {
                 JOptionPane.showMessageDialog(mainWindow,"No connected to host");

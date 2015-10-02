@@ -4,6 +4,7 @@ import chessmodel.CheckerboardPosition;
 import chessview.DeskView;
 import chessview.pieceview.PieceView;
 
+import javax.swing.JOptionPane;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -26,6 +27,7 @@ public class ClickOnDeskListener implements MouseListener {
                 if (deskView.isLegalMove(newPosition)){
                     deskView.sendTypeMove("simple");
                     deskView.movePiece(currentPiece, newPosition);
+                    deskView.displayEndMove();
                 }
             }
         }

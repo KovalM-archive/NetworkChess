@@ -12,6 +12,7 @@ public class ConnectionWithOpponent {
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
     private int passLeft;
+    private boolean endMove;
     private DeskView deskView;
 
     public ConnectionWithOpponent(Socket socket, DeskView deskView){
@@ -37,7 +38,7 @@ public class ConnectionWithOpponent {
             e.printStackTrace();
         }
         if (passLeft==0){
-            waitMove();
+            endMove = true;
         }
     }
 
@@ -51,8 +52,16 @@ public class ConnectionWithOpponent {
         }
     }
 
+    public void sendEnd(){
+        try {
+            outputStream.writeObject("end");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        waitMove();
+    }
     public void waitMove(){
-        String typeMove;
+        String typeMove, end;
         CheckerboardPosition start, finish;
         while (true) {
             try {
@@ -61,6 +70,7 @@ public class ConnectionWithOpponent {
                 if (typeMove.equals("simple")){
                     start = (CheckerboardPosition)inputStream.readObject();
                     finish = (CheckerboardPosition)inputStream.readObject();
+                    end = (String)inputStream.readObject();
                     deskView.movePieceOnDesk(deskView.getPieceViewOnDesk(start), finish);
                     System.out.println(start.getRow()+" "+start.getColumn());
                     System.out.println(finish.getRow()+" "+finish.getColumn());
@@ -73,6 +83,7 @@ public class ConnectionWithOpponent {
                     System.out.println(finish.getRow()+" "+finish.getColumn());
                     start = (CheckerboardPosition)inputStream.readObject();
                     finish = (CheckerboardPosition)inputStream.readObject();
+                    end = (String)inputStream.readObject();
                     deskView.movePieceOnDesk(deskView.getPieceViewOnDesk(start), finish);
                     System.out.println(start.getRow()+" "+start.getColumn());
                     System.out.println(finish.getRow()+" "+finish.getColumn());
@@ -85,5 +96,11 @@ public class ConnectionWithOpponent {
                 e.printStackTrace();
             }
         }
+        endMove = false;
+        deskView.displayStartMove();
+    }
+
+    public boolean isEndMove() {
+        return endMove;
     }
 }
