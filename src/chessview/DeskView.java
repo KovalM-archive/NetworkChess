@@ -27,6 +27,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -42,15 +43,15 @@ public class DeskView extends JPanel {
     private PieceView currentPiece;
     private DeskModel deskModel;
     private ConnectionWithOpponent connectionWithOpponent;
-    private JLabel moveInformationLabel;
     private JButton changerMove;
+    private TimerView timerView;
 
     public DeskView(Socket socket, String colorOfPlayer){
         super();
         setLayout(null);
         buffer = new BufferedImage(1500, 1500, BufferedImage.TYPE_INT_ARGB);
         deskModel = new DeskModel(colorOfPlayer);
-        connectionWithOpponent = new ConnectionWithOpponent(socket,this);
+        connectionWithOpponent = new ConnectionWithOpponent(socket, this);
         deskModel.setColorOfPlayer(colorOfPlayer);
         drawDesk();
 
@@ -58,15 +59,14 @@ public class DeskView extends JPanel {
         changerMove.addActionListener(new ChangeMoveListener(connectionWithOpponent, changerMove));
         changerMove.setBounds(1100, 300, 90, 90);
         add(changerMove);
+
         JLabel playerColorLabel = new JLabel("You are " + colorOfPlayer);
         playerColorLabel.setBounds(20, 0, 200, 100);
         playerColorLabel.setFont(new Font(null, Font.ITALIC, 20));
         add(playerColorLabel);
-        moveInformationLabel = new JLabel();
-        moveInformationLabel.setBounds(20, 200, 100, 200);
-        moveInformationLabel.setFont(new Font(null, Font.ITALIC, 25));
-        displayStartMove();
-        add(moveInformationLabel);
+
+        timerView = new TimerView();
+        add(timerView);
 
         setInitialState();
         addMouseListener(new ClickOnDeskListener(this));
@@ -78,12 +78,10 @@ public class DeskView extends JPanel {
     }
 
     public void displayEndMove(){
-        moveInformationLabel.setText("Wait!");
         changerMove.setVisible(true);
     }
 
     public void displayStartMove(){
-        moveInformationLabel.setText("Go!");
         changerMove.setVisible(false);
     }
     public PieceView getPieceViewOnDesk(CheckerboardPosition piecePosition){
@@ -286,9 +284,9 @@ public class DeskView extends JPanel {
 
     public void setCurrentPiece(PieceView newCurrentPiece) {
         if (newCurrentPiece == null){
-            currentPiece.notChoose();
+            if (currentPiece != null) currentPiece.notChoose();
             currentPiece = newCurrentPiece;
-            eraseAllCandidate();
+            if (deskModel.getAllCandidate()!=null) eraseAllCandidate();
             deskModel.setAllCandidate(null);
         } else {
             if (currentPiece != null){
@@ -393,5 +391,9 @@ public class DeskView extends JPanel {
     private void setInitialPositionKing(){
         add(new KingView("black", new CheckerboardPosition(0, 4)));
         add(new KingView("white", new CheckerboardPosition(7, 4)));
+    }
+
+    public TimerView getTimerView(){
+        return timerView;
     }
 }

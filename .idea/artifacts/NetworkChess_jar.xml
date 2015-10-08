@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="NetworkChess:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/NetworkChess_jar</output-path>
+    <root id="archive" name="NetworkChess.jar">
+      <element id="module-output" name="NetworkChess" />
+    </root>
+  </artifact>
+</component>

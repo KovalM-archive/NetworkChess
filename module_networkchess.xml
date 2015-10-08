@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_networkchess" default="compile.module.networkchess">
+  <dirname property="module.networkchess.basedir" file="${ant.file.module_networkchess}"/>
+  
+  <property name="module.jdk.home.networkchess" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.networkchess" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.networkchess" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.networkchess" value="-encoding UTF-8 -source 8 ${compiler.args}"/>
+  
+  <property name="networkchess.output.dir" value="${module.networkchess.basedir}/out/production/NetworkChess"/>
+  <property name="networkchess.testoutput.dir" value="${module.networkchess.basedir}/out/test/NetworkChess"/>
+  
+  <path id="networkchess.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="networkchess.module.production.classpath">
+    <path refid="${module.jdk.classpath.networkchess}"/>
+  </path>
+  
+  <path id="networkchess.runtime.production.module.classpath">
+    <pathelement location="${networkchess.output.dir}"/>
+  </path>
+  
+  <path id="networkchess.module.classpath">
+    <path refid="${module.jdk.classpath.networkchess}"/>
+    <pathelement location="${networkchess.output.dir}"/>
+  </path>
+  
+  <path id="networkchess.runtime.module.classpath">
+    <pathelement location="${networkchess.testoutput.dir}"/>
+    <pathelement location="${networkchess.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.networkchess">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.networkchess">
+    <patternset refid="excluded.from.module.networkchess"/>
+  </patternset>
+  
+  <path id="networkchess.module.sourcepath">
+    <dirset dir="${module.networkchess.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.networkchess" depends="compile.module.networkchess.production,compile.module.networkchess.tests" description="Compile module NetworkChess"/>
+  
+  <target name="compile.module.networkchess.production" depends="register.custom.compilers" description="Compile module NetworkChess; production classes">
+    <mkdir dir="${networkchess.output.dir}"/>
+    <javac2 destdir="${networkchess.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.networkchess}/javac">
+      <compilerarg line="${compiler.args.networkchess}"/>
+      <bootclasspath refid="networkchess.module.bootclasspath"/>
+      <classpath refid="networkchess.module.production.classpath"/>
+      <src refid="networkchess.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.networkchess"/>
+    </javac2>
+    
+    <copy todir="${networkchess.output.dir}">
+      <fileset dir="${module.networkchess.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.networkchess.tests" depends="register.custom.compilers,compile.module.networkchess.production" description="compile module NetworkChess; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.networkchess" description="cleanup module">
+    <delete dir="${networkchess.output.dir}"/>
+    <delete dir="${networkchess.testoutput.dir}"/>
+  </target>
+</project>

@@ -61,33 +61,26 @@ public class ConnectionWithOpponent {
         waitMove();
     }
     public void waitMove(){
+        deskView.getTimerView().end();
         String typeMove, end;
         CheckerboardPosition start, finish;
         while (true) {
             try {
                 typeMove = (String) inputStream.readObject();
-                System.out.println(typeMove);
                 if (typeMove.equals("simple")){
                     start = (CheckerboardPosition)inputStream.readObject();
                     finish = (CheckerboardPosition)inputStream.readObject();
                     end = (String)inputStream.readObject();
                     deskView.movePieceOnDesk(deskView.getPieceViewOnDesk(start), finish);
-                    System.out.println(start.getRow()+" "+start.getColumn());
-                    System.out.println(finish.getRow()+" "+finish.getColumn());
                     break;
                 } else if (typeMove.equals("castling")){
                     start = (CheckerboardPosition)inputStream.readObject();
                     finish = (CheckerboardPosition)inputStream.readObject();
                     deskView.movePieceOnDesk(deskView.getPieceViewOnDesk(start), finish);
-                    System.out.println(start.getRow()+" "+start.getColumn());
-                    System.out.println(finish.getRow()+" "+finish.getColumn());
                     start = (CheckerboardPosition)inputStream.readObject();
                     finish = (CheckerboardPosition)inputStream.readObject();
                     end = (String)inputStream.readObject();
                     deskView.movePieceOnDesk(deskView.getPieceViewOnDesk(start), finish);
-                    System.out.println(start.getRow()+" "+start.getColumn());
-                    System.out.println(finish.getRow()+" "+finish.getColumn());
-                    deskView.changePlayer();
                     break;
                 }
             } catch (IOException e) {
@@ -96,6 +89,7 @@ public class ConnectionWithOpponent {
                 e.printStackTrace();
             }
         }
+        deskView.getTimerView().begin();
         endMove = false;
         deskView.displayStartMove();
     }
