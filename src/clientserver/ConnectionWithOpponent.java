@@ -29,8 +29,6 @@ public class ConnectionWithOpponent {
 
     public void sendMove(CheckerboardPosition start, CheckerboardPosition finish){
         passLeft--;
-        System.out.println(start.getRow()+" "+start.getColumn());
-        System.out.println(finish.getRow()+" "+finish.getColumn());
         try {
             outputStream.writeObject(start);
             outputStream.writeObject(finish);
@@ -43,7 +41,6 @@ public class ConnectionWithOpponent {
     }
 
     public void sendTypeMove(String typeMove){
-        System.out.println(typeMove);
         passLeft = typeMove.equals("simple")?1:2;
         try {
             outputStream.writeObject(typeMove);

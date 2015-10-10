@@ -114,31 +114,5 @@
   
   <target name="build.modules" depends="init, clean, compile.module.networkchess" description="build all modules"/>
   
-  <target name="init.artifacts">
-    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
-    <property name="artifact.output.networkchess:jar" value="${basedir}/out/artifacts/NetworkChess_jar"/>
-    <mkdir dir="${artifacts.temp.dir}"/>
-    <property name="temp.jar.path.NetworkChess.jar" value="${artifacts.temp.dir}/NetworkChess.jar"/>
-  </target>
-  
-  <target name="artifact.networkchess:jar" depends="init.artifacts, compile.module.networkchess" description="Build &#39;NetworkChess:jar&#39; artifact">
-    <property name="artifact.temp.output.networkchess:jar" value="${artifacts.temp.dir}/NetworkChess_jar"/>
-    <mkdir dir="${artifact.temp.output.networkchess:jar}"/>
-    <jar destfile="${temp.jar.path.NetworkChess.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
-      <zipfileset dir="${networkchess.output.dir}"/>
-    </jar>
-    <copy file="${temp.jar.path.NetworkChess.jar}" tofile="${artifact.temp.output.networkchess:jar}/NetworkChess.jar"/>
-  </target>
-  
-  <target name="build.all.artifacts" depends="artifact.networkchess:jar" description="Build all artifacts">
-    <mkdir dir="${artifact.output.networkchess:jar}"/>
-    <copy todir="${artifact.output.networkchess:jar}">
-      <fileset dir="${artifact.temp.output.networkchess:jar}"/>
-    </copy>
-    
-    <!-- Delete temporary files -->
-    <delete dir="${artifacts.temp.dir}"/>
-  </target>
-  
-  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+  <target name="all" depends="build.modules" description="build all"/>
 </project>

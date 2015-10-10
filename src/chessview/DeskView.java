@@ -71,7 +71,6 @@ public class DeskView extends JPanel {
         setInitialState();
         addMouseListener(new ClickOnDeskListener(this));
         setPieceInDeskModel();
-
         if (colorOfPlayer.equals("black")){
             connectionWithOpponent.waitMove();
         }
@@ -113,9 +112,11 @@ public class DeskView extends JPanel {
         }
         return false;
     }
+
     public boolean isEndMove(){
         return connectionWithOpponent.isEndMove();
     }
+
     public void movePiece(PieceView pieceView, CheckerboardPosition newPosition){
         CheckerboardPosition start = pieceView.getCurrentPosition();
         CheckerboardPosition finish = newPosition;
@@ -131,6 +132,7 @@ public class DeskView extends JPanel {
         pieceView.getPieceModel().setPiecePosition(newPosition);
         pieceView.getPieceModel().setUsing(true);
         deskModel.addPieceOnPosition(pieceView.getPieceModel());
+        checkForCheckmate();
         checkPawnToEnd();
     }
     public void sendTypeMove(String typeMove){
@@ -209,8 +211,7 @@ public class DeskView extends JPanel {
         return deskModel.getWalkethPlayer();
     }
 
-    public void changePlayer(){
-        deskModel.changePlayer();
+    private void checkForCheckmate(){
         if (deskModel.checkForCheckmate()){
             deskModel.changePlayer();
             endGame();
