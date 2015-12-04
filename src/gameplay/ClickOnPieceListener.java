@@ -1,10 +1,9 @@
 package gameplay;
 
 import chessmodel.CheckerboardPosition;
+import chessmodel.piecemodel.PieceModelConstants;
 import chessview.DeskView;
-import chessview.pieceview.KingView;
-import chessview.pieceview.PieceView;
-import chessview.pieceview.RookView;
+import chessview.PieceView;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -26,7 +25,8 @@ public class ClickOnPieceListener implements MouseListener{
                 if (choosePiece.equals(currentPiece)){
                     deskView.setCurrentPiece(null);
                 } else {
-                    if (currentPiece instanceof KingView && choosePiece instanceof RookView){
+                    if (currentPiece != null && currentPiece.getTitle() == PieceModelConstants.KING_TITLE &&
+                            choosePiece.getTitle() == PieceModelConstants.ROOK_TITLE ){
                         CheckerboardPosition kingPosition = currentPiece.getCurrentPosition();
                         CheckerboardPosition rookPosition = choosePiece.getCurrentPosition();
                         int newKingColumn;

@@ -10,6 +10,7 @@ import java.util.List;
 public class KnightModel extends PieceModel {
     public KnightModel(String color, CheckerboardPosition piecePosition) {
         super(color, piecePosition);
+        setTitle(PieceModelConstants.KNIGHT_TITLE);
     }
 
     @Override

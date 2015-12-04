@@ -10,6 +10,7 @@ import java.util.List;
 public class RookModel extends PieceModel {
     public RookModel(String color, CheckerboardPosition piecePosition) {
         super(color, piecePosition);
+        setTitle(PieceModelConstants.ROOK_TITLE);
     }
 
     @Override

@@ -11,6 +11,15 @@ public abstract class PieceModel {
     protected String color;
     protected CheckerboardPosition piecePosition;
     protected boolean using;
+    protected int title;
+
+    public void setTitle(int title) {
+        this.title = title;
+    }
+
+    public int getTitle() {
+        return title;
+    }
 
     public PieceModel(String color, CheckerboardPosition piecePosition){
         setColor(color);

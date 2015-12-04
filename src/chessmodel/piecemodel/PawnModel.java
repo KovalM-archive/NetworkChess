@@ -10,6 +10,7 @@ import java.util.List;
 public class PawnModel extends PieceModel {
     public PawnModel(String color, CheckerboardPosition piecePosition) {
         super(color, piecePosition);
+        setTitle(PieceModelConstants.PAWN_TITLE);
     }
 
     @Override

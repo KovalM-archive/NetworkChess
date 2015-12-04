@@ -4,19 +4,12 @@ import chessmodel.CheckerboardPosition;
 import chessmodel.DeskModel;
 import chessmodel.PositionWithPiece;
 import chessmodel.piecemodel.BishopModel;
+import chessmodel.piecemodel.KingModel;
 import chessmodel.piecemodel.KnightModel;
 import chessmodel.piecemodel.PawnModel;
 import chessmodel.piecemodel.PieceModel;
 import chessmodel.piecemodel.QueenModel;
 import chessmodel.piecemodel.RookModel;
-import chessview.pieceview.BishopView;
-import chessview.pieceview.KingView;
-import chessview.pieceview.KnightView;
-import chessview.pieceview.PawnView;
-import chessview.pieceview.PieceView;
-import chessview.pieceview.PieceViewConstants;
-import chessview.pieceview.QueenView;
-import chessview.pieceview.RookView;
 import clientserver.ConnectionWithOpponent;
 import gameplay.ChangeMoveListener;
 import gameplay.ClickOnDeskListener;
@@ -27,7 +20,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -155,25 +147,17 @@ public class DeskView extends JPanel {
                 }
 
                 if (choosingPieceName.equals(PieceViewConstants.PIECE_NAME[0])){
-                    currentPiece.setPieceModel(new QueenModel(currentPiece.getColor(),currentPiece.getCurrentPosition()));
-                    currentPiece.setPiecePicture(currentPiece.getColor().equals("black") ?
-                            PieceViewConstants.BLACK_QUEEN :
-                            PieceViewConstants.WHITE_QUEEN);
+                    currentPiece.setPieceModel(new QueenModel(currentPiece.getColor(),
+                            currentPiece.getCurrentPosition()));
                 } else if (choosingPieceName.equals(PieceViewConstants.PIECE_NAME[1])){
-                    currentPiece.setPieceModel(new RookModel(currentPiece.getColor(),currentPiece.getCurrentPosition()));
-                    currentPiece.setPiecePicture(currentPiece.getColor().equals("black") ?
-                            PieceViewConstants.BLACK_ROOK :
-                            PieceViewConstants.WHITE_ROOK);
+                    currentPiece.setPieceModel(new RookModel(currentPiece.getColor(),
+                            currentPiece.getCurrentPosition()));
                 } else if (choosingPieceName.equals(PieceViewConstants.PIECE_NAME[2])){
-                    currentPiece.setPieceModel(new BishopModel(currentPiece.getColor(),currentPiece.getCurrentPosition()));
-                    currentPiece.setPiecePicture(currentPiece.getColor().equals("black") ?
-                            PieceViewConstants.BLACK_BISHOP :
-                            PieceViewConstants.WHITE_BISHOP);
+                    currentPiece.setPieceModel(new BishopModel(currentPiece.getColor(),
+                            currentPiece.getCurrentPosition()));
                 } else if (choosingPieceName.equals(PieceViewConstants.PIECE_NAME[3])){
-                    currentPiece.setPieceModel(new KnightModel(currentPiece.getColor(),currentPiece.getCurrentPosition()));
-                    currentPiece.setPiecePicture(currentPiece.getColor().equals("black") ?
-                            PieceViewConstants.BLACK_KNIGHT :
-                            PieceViewConstants.WHITE_KNIGHT);
+                    currentPiece.setPieceModel(new KnightModel(currentPiece.getColor(),
+                            currentPiece.getCurrentPosition()));
                 }
                 PositionWithPiece currentPosition = deskModel.getEqualElement(currentPiece.getCurrentPosition());
                 currentPosition.setPiece(currentPiece.getPieceModel());
@@ -358,40 +342,40 @@ public class DeskView extends JPanel {
 
     private void setInitialPositionPawns(){
         for (int i = 0; i < 8; i++) {
-            add(new PawnView("black", new CheckerboardPosition(1, i)));
-            add(new PawnView("white", new CheckerboardPosition(6, i)));
+            add(new PieceView(new PawnModel("black", new CheckerboardPosition(1, i))));
+            add(new PieceView(new PawnModel("white", new CheckerboardPosition(6, i))));
         }
     }
 
     private void setInitialPositionRook(){
-        add(new RookView("black",new CheckerboardPosition(0,0)));
-        add(new RookView("black",new CheckerboardPosition(0,7)));
-        add(new RookView("white",new CheckerboardPosition(7,0)));
-        add(new RookView("white",new CheckerboardPosition(7,7)));
+        add(new PieceView(new RookModel("black",new CheckerboardPosition(0,0))));
+        add(new PieceView(new RookModel("black",new CheckerboardPosition(0,7))));
+        add(new PieceView(new RookModel("white",new CheckerboardPosition(7,0))));
+        add(new PieceView(new RookModel("white",new CheckerboardPosition(7,7))));
     }
 
     private void setInitialPositionKnight(){
-        add(new KnightView("black",new CheckerboardPosition(0, 1)));
-        add(new KnightView("black",new CheckerboardPosition(0,6)));
-        add(new KnightView("white",new CheckerboardPosition(7,1)));
-        add(new KnightView("white",new CheckerboardPosition(7,6)));
+        add(new PieceView(new KnightModel("black",new CheckerboardPosition(0,1))));
+        add(new PieceView(new KnightModel("black",new CheckerboardPosition(0,6))));
+        add(new PieceView(new KnightModel("white",new CheckerboardPosition(7,1))));
+        add(new PieceView(new KnightModel("white",new CheckerboardPosition(7,6))));
     }
 
     private void setInitialPositionBishop(){
-        add(new BishopView("black",new CheckerboardPosition(0, 2)));
-        add(new BishopView("black",new CheckerboardPosition(0,5)));
-        add(new BishopView("white",new CheckerboardPosition(7,2)));
-        add(new BishopView("white",new CheckerboardPosition(7,5)));
+        add(new PieceView(new BishopModel("black",new CheckerboardPosition(0,2))));
+        add(new PieceView(new BishopModel("black",new CheckerboardPosition(0,5))));
+        add(new PieceView(new BishopModel("white",new CheckerboardPosition(7,2))));
+        add(new PieceView(new BishopModel("white",new CheckerboardPosition(7,5))));
     }
 
     private void setInitialPositionQueen(){
-        add(new QueenView("black", new CheckerboardPosition(0, 3)));
-        add(new QueenView("white",new CheckerboardPosition(7,3)));
+        add(new PieceView(new QueenModel("black", new CheckerboardPosition(0, 3))));
+        add(new PieceView(new QueenModel("white",new CheckerboardPosition(7,3))));
     }
 
     private void setInitialPositionKing(){
-        add(new KingView("black", new CheckerboardPosition(0, 4)));
-        add(new KingView("white", new CheckerboardPosition(7, 4)));
+        add(new PieceView(new KingModel("black", new CheckerboardPosition(0, 4))));
+        add(new PieceView(new KingModel("white", new CheckerboardPosition(7, 4))));
     }
 
     public TimerView getTimerView(){

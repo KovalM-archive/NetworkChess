@@ -1,4 +1,4 @@
-package chessview.pieceview;
+package chessview;
 
 import javax.swing.ImageIcon;
 
@@ -16,4 +16,9 @@ public final class PieceViewConstants {
     public final static ImageIcon WHITE_ROOK = new ImageIcon("image/whiteRook.png");
     public final static ImageIcon WHITE_PAWN = new ImageIcon("image/whitePawn.png");
     public final static String[] PIECE_NAME = {"Queen", "Rook", "Bishop", "Knight"};
+    public final static ImageIcon[] PIECE_ICONS = {
+            BLACK_PAWN, BLACK_ROOK, BLACK_KNIGHT,
+            BLACK_BISHOP, BLACK_QUEEN, BLACK_KING,
+            WHITE_PAWN, WHITE_ROOK, WHITE_KNIGHT,
+            WHITE_BISHOP, WHITE_QUEEN, WHITE_KING};
 }

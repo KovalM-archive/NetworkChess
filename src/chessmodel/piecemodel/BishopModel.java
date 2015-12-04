@@ -10,6 +10,7 @@ import java.util.List;
 public class BishopModel extends PieceModel {
     public BishopModel(String color, CheckerboardPosition piecePosition) {
         super(color, piecePosition);
+        setTitle(PieceModelConstants.BISHOP_TITLE);
     }
 
     public List<PositionWithPiece> getAllCandidate(DeskModel deskModel){

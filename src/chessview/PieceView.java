@@ -1,4 +1,4 @@
-package chessview.pieceview;
+package chessview;
 
 import chessmodel.piecemodel.PieceModel;
 import chessmodel.CheckerboardPosition;
@@ -8,28 +8,30 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Color;
 
-public abstract class PieceView extends JLabel {
-    private String color;
+public class PieceView extends JLabel {
     protected PieceModel pieceModel;
 
-    protected PieceView(){
+    public PieceView(PieceModel pieceModel){
+        setPieceModel(pieceModel);
+        goToPosition(pieceModel.getPiecePosition());
         setBackground(new Color(255, 255, 255, 0));
     }
 
-    public void setPiecePicture(ImageIcon piecePicture) {
+    public int getTitle(){
+        return pieceModel.getTitle();
+    }
+    public void setPiecePicture() {
+        int colorSmeschenie = getColor().equals("white")?6:0; // change title of var
+        ImageIcon piecePicture = PieceViewConstants.PIECE_ICONS[getTitle()+colorSmeschenie];
         setIcon(piecePicture);
     }
 
     public String getColor() {
-        return color;
+        return pieceModel.getColor();
     }
 
     public void setColor(String color) {
-        this.color = color;
-    }
-    
-    protected ImageIcon getPiecePictureByColor(ImageIcon blackVersion, ImageIcon whiteVersion){
-        return color.equals("black")?blackVersion:whiteVersion;
+        pieceModel.setColor(color);
     }
 
     public void goToPosition(CheckerboardPosition newPosition){
@@ -41,7 +43,7 @@ public abstract class PieceView extends JLabel {
         return pieceModel.getPiecePosition();
     }
 
-    protected void setCurrentPosition(CheckerboardPosition currentPosition) {
+    public void setCurrentPosition(CheckerboardPosition currentPosition) {
         pieceModel.setPiecePosition(currentPosition);
     }
 
@@ -59,5 +61,6 @@ public abstract class PieceView extends JLabel {
 
     public void setPieceModel(PieceModel pieceModel) {
         this.pieceModel = pieceModel;
+        setPiecePicture();
     }
 }

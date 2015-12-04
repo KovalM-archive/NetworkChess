@@ -10,6 +10,7 @@ import java.util.List;
 public class QueenModel extends PieceModel {
     public QueenModel(String color, CheckerboardPosition piecePosition) {
         super(color, piecePosition);
+        setTitle(PieceModelConstants.QUEEN_TITLE);
     }
 
     @Override
